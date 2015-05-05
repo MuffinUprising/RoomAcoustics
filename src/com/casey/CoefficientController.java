@@ -56,10 +56,6 @@ class AddShutdownHook {
         Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run() {
                 System.out.println("Shutdown hook: program closed, attempting to shut database connection");
-                //Unfortunately this doesn't seem to be called when a program is restarted in eclipse.
-                //Avoid restarting your programs. If you do, and you get an existing connection error you can either
-                // 1. restart eclipse - Menu > Restart
-                // 2. Delete your database folder. In this project it's a folder called laptopinventoryDB (or similar) in the root directory of your project.
                 CoefficientController.db.cleanup();
             }
         });

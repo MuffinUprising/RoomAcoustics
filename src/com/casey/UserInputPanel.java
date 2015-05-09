@@ -10,13 +10,14 @@ import java.awt.event.ActionListener;
  */
 public class UserInputPanel extends JPanel{
 
-    Room room1 = new Room(0,0,0,0,null,null,null);
+
+//    ModeCanvas modeCanvas = new ModeCanvas();
+    CoefficientController myController = new CoefficientController();
     Door door1 = new Door(0,0,null);
     Window window1 = new Window(0,0);
+    Room room1 = new Room(0,0,0,0,null,null,null);
     Calculator calc = new Calculator(null, null, null);
-//    ModeCanvas modeCanvas = new ModeCanvas();
-    CoefficientController myController;
-    CoefficientModel coefficientModel = new CoefficientModel(myController);
+
 
     private JLabel roomDimensionsLabel;
     private JLabel heightLabel;
@@ -44,6 +45,7 @@ public class UserInputPanel extends JPanel{
     private JButton calcModeButton;
     private JButton calcReverbButton;
     private JButton printDatabase;
+    private JButton buildDatabase;
 
     public UserInputPanel() {
         //dimension variable
@@ -318,7 +320,7 @@ public class UserInputPanel extends JPanel{
                 String wallMaterial = wallMaterialComboBox.toString();
                 room1.setWallMaterial(wallMaterial);
                 System.out.println("wall material added to Room");
-                coefficientModel.wallMaterialCoefficients(wallMaterial);
+                myController.wallMaterial(wallMaterial);
             }
         });
 
@@ -335,7 +337,7 @@ public class UserInputPanel extends JPanel{
                 String floorMaterial = floorMaterialComboBox.toString();
                 room1.setFloorMaterial(floorMaterial);
                 System.out.println("floor material added to Room");
-                coefficientModel.floorMaterialCoefficients(floorMaterial);
+                myController.floorMaterial(floorMaterial);
             }
         });
 
@@ -352,7 +354,7 @@ public class UserInputPanel extends JPanel{
                 String ceilingMaterial = ceilingMaterialComboBox.toString();
                 room1.setCeilingMaterial(ceilingMaterial);
                 System.out.println("ceiling material added to Room");
-                coefficientModel.ceilingMaterialCoefficients(ceilingMaterial);
+                myController.ceilingMaterial(ceilingMaterial);
             }
         });
 
@@ -369,7 +371,7 @@ public class UserInputPanel extends JPanel{
                 String doorMaterial = doorMaterialComboBox.toString();
                 door1.setDoorMaterial(doorMaterial);
                 System.out.println("material added to Door");
-                coefficientModel.doorMaterialCoefficients(doorMaterial);
+                myController.doorMaterial(doorMaterial);
             }
         });
 
@@ -391,11 +393,26 @@ public class UserInputPanel extends JPanel{
         printDatabase.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                coefficientModel.printDatabase();
+                myController.printAll();
             }
         });
 
+//        //build database
+//        c.gridx = 0;
+//        c.gridy = 27;
+//        add(buildDatabase, c);
+//        buildDatabase.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                myController.setup();
+//            }
+//        });
+
     }
+
+
+
+
 
     public void paintComponent(Graphics g) {
 

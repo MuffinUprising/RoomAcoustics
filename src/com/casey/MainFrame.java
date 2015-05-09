@@ -20,6 +20,8 @@ public class MainFrame extends JFrame{
     public JSplitPane splitPane;
     public JFrame f;
 
+
+
     public MainFrame(){
         super("Reverb Calculator");
 

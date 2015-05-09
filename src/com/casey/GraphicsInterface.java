@@ -10,6 +10,7 @@ public abstract class GraphicsInterface extends Graphics{
 
 
 
+
     public static void drawLengthModes(Graphics g, Calculator calc){
 
         //TODO: figure out how to pass Graphics to UserInputPanel or find some way to not require Graphics import

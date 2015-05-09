@@ -8,13 +8,12 @@ import java.util.LinkedList;
  */
 public class Rt60Canvas extends Canvas{
 
-    protected Calculator calc;
+    Calculator calc;
 
     public Rt60Canvas() {
         setPreferredSize(new Dimension(600, 200));
         setVisible(true);
         setBackground(Color.GRAY);
-        calc = new Calculator(null, null, null);
 
     }
 

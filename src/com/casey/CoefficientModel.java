@@ -24,7 +24,7 @@ public class CoefficientModel {
     private static final String PASS = "password";
 
 
-    com.casey.CoefficientController myController;
+    CoefficientController myController;
 
     Statement statement = null;
 
@@ -37,8 +37,8 @@ public class CoefficientModel {
     PreparedStatement psQuery = null;
 
 
-    public CoefficientModel(com.casey.CoefficientController controller) {
-        this.myController = controller;
+    public CoefficientModel() {
+
     }
 
 
@@ -55,27 +55,27 @@ public class CoefficientModel {
             return false;
         }
 
-//        try {
-//            createTable();
-//
-//        } catch (SQLException sqle) {
-//            System.err.println("Unable to create database. Error message and stack trace follow");
-//            System.err.println(sqle.getMessage() + " " + sqle.getErrorCode());
-//            sqle.printStackTrace();
-//            return false;
-//        }
-//
-////        Add test data
-//        try {
-//            addTestData();
-//        }
-//        catch (Exception sqle) {
-//
-//            System.err.println("Unable to add test data to database. Error message and stack trace follow");
-//            System.err.println(sqle.getMessage());
-//            sqle.printStackTrace();
-//            return false;
-//        }
+        try {
+            createTable();
+
+        } catch (SQLException sqle) {
+            System.err.println("Unable to create database. Error message and stack trace follow");
+            System.err.println(sqle.getMessage() + " " + sqle.getErrorCode());
+            sqle.printStackTrace();
+            return false;
+        }
+
+//        Add test data
+        try {
+            addTestData();
+        }
+        catch (Exception sqle) {
+
+            System.err.println("Unable to add test data to database. Error message and stack trace follow");
+            System.err.println(sqle.getMessage());
+            sqle.printStackTrace();
+            return false;
+        }
 
         //clean up and exit.
 
@@ -99,12 +99,14 @@ public class CoefficientModel {
         }
     }
 
-    private void createConnection() throws Exception {
+    public void createConnection() throws Exception {
 
-        try {
-
+        try{
             Class.forName(driver);  //Instantiate a driver object
-
+        }catch(ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        try {
             conn = DriverManager.getConnection(protocol + dbName + "/Users/casey/IdeaProjects/RoomAcoustics/coefficientDB/;create=true", USER, PASS);
             statement = conn.createStatement();
             allStatements.add(statement);
@@ -125,10 +127,9 @@ public class CoefficientModel {
         }
         try {
 
-            //floor materials
-
             System.out.println("Adding materials to database..");
 
+            //floor materials
             String addRecord01 = "INSERT INTO coefficientDB VALUES ('carpet', 0.01, 0.02, 0.06, 0.15, 0.25, 0.45)" ;
             statement.executeUpdate(addRecord01);
             String addRecord02 = "INSERT INTO coefficientDB VALUES ('concrete (unpainted)', 0.01, 0.02, 0.04, 0.06, 0.08, 0.1)" ;
@@ -433,14 +434,14 @@ public class CoefficientModel {
 
             try {
                 while (rs.next()) {
-                    String coefficient = rs.getString("material");
+                    String material = rs.getString("material");
                     double coefficient125 = rs.getDouble("onetwofiveHz");
                     double coefficient250 = rs.getDouble("twofivezeroHz");
                     double coefficient500 = rs.getDouble("fivehundredHz");
                     double coefficient1k = rs.getDouble("onekHz");
                     double coefficient2k = rs.getDouble("twokHz");
                     double coefficient4k = rs.getDouble("fourkHz");
-                    System.out.println("Material:" + coefficient
+                    System.out.println("Material:" + material
                             + " 125Hz: " + coefficient125
                             + " 250Hz: " + coefficient250
                             + " 500Hz: " + coefficient500

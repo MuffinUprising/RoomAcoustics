@@ -1,50 +1,54 @@
 package com.casey;
 
 import javax.swing.*;
+import java.sql.SQLException;
 
 
 public class CoefficientController {
 
-    static CoefficientModel db;
+    CoefficientModel coefficientModel = new CoefficientModel();
 
-    public static void main(String[] args) {
 
-        //Add a shutdown hook.
-        AddShutdownHook closeDBConnection = new AddShutdownHook();
-        closeDBConnection.attachShutdownHook();
-        //Can put code in here to try to shut down the DB connection in a tidy manner if possible
 
-        try {
-            CoefficientController controller = new CoefficientController();
+    public void printAll(){
 
-            db = new CoefficientModel(controller);
+        coefficientModel.printDatabase();
+    }
 
-            boolean setup = db.setupDatabase();
-            if (setup == false) {
-                System.out.println("Error setting up database, see error messages. Clean up database connections.... Quitting program ");
+    public void setup(){
+        coefficientModel.setupDatabase();
+    }
 
-                db.cleanup();
+    public void cleanup(){
 
-                System.out.println("Quitting program ");
+        coefficientModel.cleanup();
+    }
 
-                System.exit(-1);   //Non-zero exit codes indicate errors.
-            }
+    public void wallMaterial(String wallMaterial){
+        coefficientModel.wallMaterialCoefficients(wallMaterial);
+    }
 
-//            new InventoryView(controller).launchUI();
+    public void floorMaterial(String floorMaterial){
+        coefficientModel.floorMaterialCoefficients(floorMaterial);
+    }
+
+    public void ceilingMaterial(String ceilingMaterial){
+        coefficientModel.ceilingMaterialCoefficients(ceilingMaterial);
+    }
+
+    public void doorMaterial(String doorMaterial){
+        coefficientModel.doorMaterialCoefficients(doorMaterial);
+    }
+
+    public void connect(){
+        try{
+            coefficientModel.createConnection();
+
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }catch(Exception e) {
+            e.printStackTrace();
         }
-
-        finally {
-//            if (db != null) {
-//                db.cleanup();
-//            }
-        }
-
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new MainFrame();
-
-            }
-        });
 
     }
 
@@ -52,11 +56,14 @@ public class CoefficientController {
 
 
 class AddShutdownHook {
+
+    CoefficientController myController;
+
     public void attachShutdownHook() {
         Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run() {
                 System.out.println("Shutdown hook: program closed, attempting to shut database connection");
-                CoefficientController.db.cleanup();
+                myController.cleanup();
             }
         });
     }

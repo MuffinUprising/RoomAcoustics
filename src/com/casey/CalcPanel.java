@@ -20,7 +20,7 @@ public class CalcPanel extends JPanel {
         setVisible(true);
         setOpaque(true);
         setBackground(Color.LIGHT_GRAY);
-        setPreferredSize(new Dimension(1000, 800));
+        setPreferredSize(new Dimension(1000, 760));
         setFocusable(true);
         setLayout(new GridBagLayout());
 

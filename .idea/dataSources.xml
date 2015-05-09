@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="2543068951">
+  <component name="DataSourceManagerImpl" format="xml" hash="3455462253">
     <data-source source="LOCAL" name="coefficientDB" uuid="7e28bb1d-a1ef-4638-8870-c7ec9a5f6ded">
       <driver-ref>derby.embedded</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.apache.derby.jdbc.EmbeddedDriver</jdbc-driver>
-      <jdbc-url>jdbc:derby:;create=true</jdbc-url>
+      <jdbc-url>jdbc:derby:$PROJECT_DIR$/coefficientDB/;create=true</jdbc-url>
       <libraries>
         <library>
           <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/derby-10.11.1.1.jar</url>

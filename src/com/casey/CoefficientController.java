@@ -34,9 +34,9 @@ public class CoefficientController {
         }
 
         finally {
-            if (db != null) {
-                db.cleanup();
-            }
+//            if (db != null) {
+//                db.cleanup();
+//            }
         }
 
         SwingUtilities.invokeLater(new Runnable() {

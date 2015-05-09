@@ -37,7 +37,7 @@ public class MainFrame extends JFrame{
 
         //frame building
         f = new JFrame("Reverb Measurement");
-        f.setPreferredSize(new Dimension(1200, 800));
+        f.setPreferredSize(new Dimension(1200, 760));
         f.setResizable(false);
         f.setLayout(new BorderLayout());
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

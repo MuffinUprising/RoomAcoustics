@@ -62,7 +62,7 @@ public class Calculator {
             double newMode;
             newMode = heightCurrentMode * heightMultiplier;
             heightModes.add(newMode);
-            heightMultiplier += 1;
+            heightMultiplier++;
             heightCurrentMode = newMode;
         }
         return heightModes;
@@ -90,7 +90,7 @@ public class Calculator {
             double newMode;
             newMode = widthCurrentMode * widthMultiplier;
             widthModes.add(newMode);
-            widthMultiplier += 1;
+            widthMultiplier++;
             widthCurrentMode = newMode;
         }
 
@@ -117,7 +117,7 @@ public class Calculator {
             double newMode;
             newMode = lengthCurrentMode * lengthMultiplier;
             lengthModes.add(newMode);
-            lengthMultiplier += 1;
+            lengthMultiplier++;
             lengthCurrentMode = newMode;
         }
 

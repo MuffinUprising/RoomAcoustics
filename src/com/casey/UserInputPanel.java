@@ -14,7 +14,7 @@ public class UserInputPanel extends JPanel{
     Door door1 = new Door(0,0,null);
     Window window1 = new Window(0,0);
     Calculator calc = new Calculator(null, null, null);
-    ModeCanvas modeCanvas = new ModeCanvas();
+//    ModeCanvas modeCanvas = new ModeCanvas();
     CoefficientController myController;
     CoefficientModel coefficientModel = new CoefficientModel(myController);
 
@@ -43,6 +43,7 @@ public class UserInputPanel extends JPanel{
     private JComboBox doorMaterialComboBox;
     private JButton calcModeButton;
     private JButton calcReverbButton;
+    private JButton printDatabase;
 
     public UserInputPanel() {
         //dimension variable
@@ -79,6 +80,9 @@ public class UserInputPanel extends JPanel{
         doorHeightTextField = new JTextField();
         doorWidthLabel = new JLabel("Total door width");
         doorWidthTextField = new JTextField();
+
+        //print database for testing
+        printDatabase = new JButton("Print Database");
 
         //materials combo boxes
         //wall
@@ -189,10 +193,8 @@ public class UserInputPanel extends JPanel{
                 room1.setRoomHeight(height);
                 System.out.println("height added to Room");
                 calc.lengthModeCalc(room1);
-//                modeCanvas.drawLengthModes(g, calc);
+//                GraphicsInterface.drawLengthModes(g, calc);
                 //TODO reference todo in ModeCanvas - importing Graphics into UserInputPanel seems to cause major issues
-
-
             }
         });
 
@@ -379,6 +381,17 @@ public class UserInputPanel extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
 
+            }
+        });
+
+        //print database button
+        c.gridx = 0;
+        c.gridy = 26;
+        add(printDatabase, c);
+        printDatabase.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                coefficientModel.printDatabase();
             }
         });
 

@@ -2,6 +2,7 @@ package com.casey;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 /**
  * Created by casey on 5/3/15.
@@ -13,6 +14,8 @@ public class CalcPanel extends JPanel {
 
     private JLabel roomModes;
     private JLabel rt60Label;
+
+    Calculator calc;
 
 
 
@@ -28,6 +31,8 @@ public class CalcPanel extends JPanel {
 
         roomModes = new JLabel("Room Modes");
         rt60Label = new JLabel("RT60 results");
+
+        JButton calcModeButton = new JButton("Calculate Modes");
 
 
         //inset and pad size
@@ -48,6 +53,19 @@ public class CalcPanel extends JPanel {
         c.gridy = 2;
         add(modeCanvas, c);
 
+        //calculate modes button
+        c.gridx = 0;
+        c.gridy = 3;
+        add(calcModeButton, c);
+        calcModeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+//                modeCanvas.drawLengthModes();
+//                modeCanvas.drawHeightModes();
+//                modeCanvas.drawWidthModes();
+            }
+        });
+
         //RT60 label
         c.gridx = 0;
         c.gridy = 4;
@@ -62,11 +80,12 @@ public class CalcPanel extends JPanel {
         c.gridx = 0;
         c.gridy = 7;
         add(modeDescriptionCanvas, c);
-
     }
 
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+//        modeCanvas.callModes();
     }
 }

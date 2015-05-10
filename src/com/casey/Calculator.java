@@ -18,21 +18,19 @@ public class Calculator {
     // any modes that are within 5Hz of a mode from another dimension is considered problematic
     // because these frequencies can meet at points in the room and amplify each other causing "boomy" spots
 
-    protected LinkedList<Double> heightModes;
-    protected LinkedList<Double> widthModes;
-    protected LinkedList<Double> lengthModes;
+//    LinkedList<Integer> heightModes = new LinkedList<Integer>();
+//    LinkedList<Integer> widthModes = new LinkedList<Integer>();
+//    LinkedList<Integer> lengthModes = new LinkedList<Integer>();
 
-    public Calculator(LinkedList heightModes, LinkedList widthModes, LinkedList lengthModes){
 
-        this.heightModes = heightModes;
-        this.widthModes = widthModes;
-        this.lengthModes = lengthModes;
+    public Calculator(){
+
     }
 
-    //getters
-    public LinkedList<Double> getHeightModes() {return heightModes;}
-    public LinkedList<Double> getWidthModes() {return widthModes;}
-    public LinkedList<Double> getLengthModes() {return lengthModes;}
+//    //getters
+//    public LinkedList<Integer> getHeightModes() {return heightModes;}
+//    public LinkedList<Integer> getWidthModes() {return widthModes;}
+//    public LinkedList<Integer> getLengthModes() {return lengthModes;}
 
     public static void roomAbsorptionCalc() {
 
@@ -42,70 +40,89 @@ public class Calculator {
 
     }
 
-    public LinkedList heightModeCalc (Room room1) {
+    public static void heightModeCalc (Room room1) {
 
-        //LinkedList to store axial modes
-        LinkedList<Double> heightModes = new LinkedList<Double>();
+        LinkedList<Integer> heightModes = new LinkedList<Integer>();
+
         //get dimensions from Room and determine fundamental
         double height = room1.getRoomHeight();
         double heightFundamental = 563.5 / height;
+        //convert to integer
+        int fundamentalInt = (int)Math.round(heightFundamental);
         //add fundamental to linkedlist
-        heightModes.add(heightFundamental);
+        heightModes.add(fundamentalInt);
 
         //current mode and multiplier values
         double heightCurrentMode;
         int heightMultiplier = 2;
+        heightCurrentMode = heightFundamental;
 
         //while loop to iterate over height modes
-        heightCurrentMode = heightFundamental;
         while (heightCurrentMode <= 300) {
             double newMode;
-            newMode = heightCurrentMode * heightMultiplier;
-            heightModes.add(newMode);
+            newMode = heightFundamental * heightMultiplier;
+            //convert back to integer
+            int newModeInt = (int)Math.round((newMode));
+            heightModes.add(newModeInt);
             heightMultiplier++;
             heightCurrentMode = newMode;
         }
-        return heightModes;
+        System.out.printf("height modes calculated\n");
 
+        for (double x : heightModes) {
 
+            System.out.println(x + "\n");
+        }
+        room1.setHeightModes(heightModes);
     }
 
-    public LinkedList widthModeCalc (Room room1) {
+    public static void widthModeCalc (Room room1) {
 
-        //LinkedList to store axial modes
-        LinkedList<Double> widthModes = new LinkedList<Double>();
+        LinkedList<Integer> widthModes = new LinkedList<Integer>();
+
         //get dimensions from Room and determine fundamental
         double width = room1.getRoomWidth();
         double widthFundamental = 563.5 / width;
+        //convert to integer
+        int fundamentalInt = (int)Math.round(widthFundamental);
         //add fundamental to linkedlist
-        widthModes.add(widthFundamental);
+        widthModes.add(fundamentalInt);
 
         //current mode and multiplier values
         double widthCurrentMode;
         int widthMultiplier = 2;
+        widthCurrentMode = widthFundamental;
 
         //while loop to iterate over width modes
-        widthCurrentMode = widthFundamental;
         while (widthCurrentMode <= 300) {
             double newMode;
-            newMode = widthCurrentMode * widthMultiplier;
-            widthModes.add(newMode);
+            newMode = widthFundamental * widthMultiplier;
+            //convert back to integer
+            int newModeInt = (int)Math.round((newMode));
+            widthModes.add(newModeInt);
             widthMultiplier++;
             widthCurrentMode = newMode;
         }
+        System.out.printf("width modes calculated\n");
 
-        return widthModes;
+        for(double x : widthModes){
+            System.out.println(x + "\n");
+        }
+        room1.setWidthModes(widthModes);
+
     }
 
-    public LinkedList lengthModeCalc (Room room1){
+    public static void lengthModeCalc (Room room1){
 
-        //LinkedList to store axial modes
-        LinkedList<Double> lengthModes = new LinkedList<Double>();
+        LinkedList<Integer> lengthModes = new LinkedList<Integer>();
+
         //get dimensions from Room and determine fundamental
         double length = room1.getRoomLength();
         double lengthFundamental = 563.5 / length;
+        //convert to integer
+        int fundamentalInt = (int)Math.round(lengthFundamental);
         //add fundamental to linkedlists
-        lengthModes.add(lengthFundamental);
+        lengthModes.add(fundamentalInt);
 
         //current mode and multiplier variables
         double lengthCurrentMode;
@@ -115,12 +132,18 @@ public class Calculator {
         lengthCurrentMode = lengthFundamental;
         while (lengthCurrentMode <= 300) {
             double newMode;
-            newMode = lengthCurrentMode * lengthMultiplier;
-            lengthModes.add(newMode);
+            newMode = lengthFundamental * lengthMultiplier;
+            //convert back to integer
+            int newModeInt = (int)Math.round((newMode));
+            lengthModes.add(newModeInt);
             lengthMultiplier++;
             lengthCurrentMode = newMode;
         }
+        System.out.printf("length modes calculated\n");
 
-        return lengthModes;
+        for (double x : lengthModes) {
+            System.out.println(x + "\n");
+        }
+        room1.setLengthModes(lengthModes);
     }
 }

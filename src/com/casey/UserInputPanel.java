@@ -15,8 +15,8 @@ public class UserInputPanel extends JPanel{
     CoefficientController myController = new CoefficientController();
     Door door1 = new Door(0,0,null);
     Window window1 = new Window(0,0);
-    Room room1 = new Room(0,0,0,0,null,null,null);
-    Calculator calc = new Calculator(null, null, null);
+    Room room1 = new Room(0,0,0,0,null,null,null,null,null,null);
+    Calculator calc = new Calculator();
 
 
     private JLabel roomDimensionsLabel;
@@ -185,8 +185,6 @@ public class UserInputPanel extends JPanel{
         add(heightLabel,c);
         c.gridx = 0;
         c.gridy = 3;
-
-
         add(heightTextField, c);
         heightTextField.addActionListener(new ActionListener() {
             @Override
@@ -194,9 +192,7 @@ public class UserInputPanel extends JPanel{
                 Double height = new Double(heightTextField.getText());
                 room1.setRoomHeight(height);
                 System.out.println("height added to Room");
-                calc.lengthModeCalc(room1);
-//                GraphicsInterface.drawLengthModes(g, calc);
-                //TODO reference todo in ModeCanvas - importing Graphics into UserInputPanel seems to cause major issues
+                calc.heightModeCalc(room1);
             }
         });
 
@@ -213,6 +209,7 @@ public class UserInputPanel extends JPanel{
                 Double width = new Double(widthTextField.getText());
                 room1.setRoomWidth(width);
                 System.out.println("width added to Room");
+                calc.widthModeCalc(room1);
             }
         });
 
@@ -229,19 +226,21 @@ public class UserInputPanel extends JPanel{
                 Double length = new Double(lengthTextField.getText());
                 room1.setRoomLength(length);
                 System.out.println("length added to Room");
-            }
-        });
-
-        //calculate modes button
-        c.gridx = 0;
-        c.gridy = 8;
-        add(calcModeButton, c);
-        calcModeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+                calc.lengthModeCalc(room1);
 
             }
         });
+
+//        //calculate modes button
+//        c.gridx = 0;
+//        c.gridy = 8;
+//        add(calcModeButton, c);
+//        calcModeButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//            }
+//        });
 
         //window height label and text field
         c.gridx = 0;

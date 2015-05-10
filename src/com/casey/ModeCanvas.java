@@ -1,5 +1,9 @@
 package com.casey;
+import sun.awt.image.ImageWatched;
+
+import javax.xml.bind.Marshaller;
 import java.awt.*;
+import java.util.InputMismatchException;
 import java.util.LinkedList;
 
 /**
@@ -7,15 +11,19 @@ import java.util.LinkedList;
  */
 public class ModeCanvas extends Canvas {
 
-    protected Calculator calc;
+    Room room1;
+
+    LinkedList<Integer> lengthModesInt = room1.getLengthModes();
+    LinkedList<Integer> widthModesInt = room1.getWidthModes();
+    LinkedList<Integer> heightModesInt = room1.getHeightModes();
+
 
     public ModeCanvas(){
         setPreferredSize(new Dimension(360, 300));
         setVisible(true);
         setBackground(Color.GRAY);
-        calc = new Calculator(null, null, null);
-
     }
+
 
     public void paint(Graphics g){
         //border
@@ -35,6 +43,7 @@ public class ModeCanvas extends Canvas {
 //        g.setColor(Color.BLUE);
         g.fillRect(12, 182, 337, 87);
 
+        //horizontal lines - removed, but used for reference
 //        g.drawLine(10, 30, 350, 30);
 //        g.drawLine(10, 50, 350, 50);
 //        g.drawLine(10, 70, 350, 70);
@@ -76,8 +85,94 @@ public class ModeCanvas extends Canvas {
         g.drawString("Width Modes", 136, 177);
         g.drawString("Length Modes", 136, 263);
 
+        //draw length modes
+        while (!lengthModesInt.isEmpty()) {
+            g.setColor(Color.RED);
+            for( int x : lengthModesInt){
+                int lengthX = x;
+                //draw mode on canvas
+                g.drawOval(5,5,lengthX,80);
+            }
+            repaint();
+        }
+
+        //draw width modes
+        while (!widthModesInt.isEmpty()) {
+            g.setColor(Color.GREEN);
+            for(int x : widthModesInt){
+                int widthX = x;
+                //draw mode on canvas
+                g.drawOval(5,5,widthX,150);
+            }
+            repaint();
+        }
+
+        //draw height modes
+        while (!heightModesInt.isEmpty()) {
+            g.setColor(Color.BLUE);
+            for(int x : heightModesInt){
+                int heightX = x;
+                //draw mode on canvas
+                g.drawOval(5,5,heightX,230);
+            }
+            repaint();
+        }
+
 
     }
 
+    public void callModes(){
+        drawLengthModes();
+        drawHeightModes();
+        drawWidthModes();
+    }
 
+    public LinkedList<Integer> drawLengthModes(){
+
+        LinkedList<Integer> lengthModesInt = new LinkedList<Integer>();
+
+        for(int x : room1.getLengthModes()){
+            System.out.println(x + "\n");
+            lengthModesInt.add(x);
+        }
+        for (int y : lengthModesInt) {
+            System.out.println(y + "\n");
+        }
+
+        return lengthModesInt;
+
+    }
+
+    public LinkedList<Integer> drawWidthModes() {
+
+
+        LinkedList<Integer> widthModesInt = new LinkedList<Integer>();
+
+        for(int x : room1.getWidthModes()){
+            System.out.println(x + "\n");
+            widthModesInt.add(x);
+        }
+
+        for (int y : widthModesInt) {
+            System.out.println(y + "\n");
+        }
+        return widthModesInt;
+
+    }
+
+    public LinkedList<Integer> drawHeightModes() {
+
+        LinkedList<Integer> heightModesInt = new LinkedList<Integer>();
+
+        for (int x : room1.getHeightModes()){
+            System.out.println(x + "\n");
+            heightModesInt.add(x);
+        }
+
+        for (int y : heightModesInt) {
+            System.out.println(y + "\n");
+        }
+        return heightModesInt;
+
+    }
 }

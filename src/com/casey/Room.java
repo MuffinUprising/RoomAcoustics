@@ -1,5 +1,8 @@
 package com.casey;
 
+import sun.awt.image.ImageWatched;
+import java.util.LinkedList;
+
 import java.util.DoubleSummaryStatistics;
 
 /**
@@ -22,6 +25,9 @@ public class Room {
 
 //    //measurement variables
 //    protected Double[] roomModes;
+    protected LinkedList<Integer>  lengthModes;
+    protected LinkedList<Integer> widthModes;
+    protected LinkedList<Integer> heightModes;
 //    protected Double[] rt60actual;
 //    protected Double[] rt60Goal;
 //    protected Double[] absorptionNeeded;
@@ -33,7 +39,10 @@ public class Room {
                 double roomVolume,
                 String floorMaterial,
                 String wallMaterial,
-                String ceilingMaterial)
+                String ceilingMaterial,
+                LinkedList<Integer> lengthModes,
+                LinkedList<Integer> widthModes,
+                LinkedList<Integer> heightModes)
     {
 
         this.roomHeight = roomHeight;
@@ -46,6 +55,9 @@ public class Room {
         this.ceilingMaterial = ceilingMaterial;
 
 //        this.roomModes = roomModes;
+        this.lengthModes = lengthModes;
+        this.widthModes = widthModes;
+        this.heightModes = heightModes;
 //        this.rt60actual = rt60actual;
 //        this.rt60Goal = rt60Goal;
 //        this.absorptionNeeded = absorptionNeeded;
@@ -78,7 +90,20 @@ public class Room {
     public String getCeilingMaterial() { return ceilingMaterial; }
     public void setCeilingMaterial(String ceilingMaterial) { this.ceilingMaterial = ceilingMaterial; }
 
+    //room volume
     public double getRoomVolume() { return roomVolume; }
+
+    //length modes
+    public LinkedList<Integer> getLengthModes() { return lengthModes; }
+    public void setLengthModes(LinkedList<Integer> lengthModes) { this.lengthModes = lengthModes; }
+
+    //width modes
+    public LinkedList<Integer> getWidthModes() { return widthModes; }
+    public void setWidthModes(LinkedList<Integer> widthModes) { this.widthModes = widthModes; }
+
+    //height modes
+    public LinkedList<Integer> getHeightModes() { return heightModes; }
+    public void setHeightModes(LinkedList<Integer> heightModes) { this.heightModes = heightModes; }
 
     @Override
     public String toString(){

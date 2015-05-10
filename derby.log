@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Sat May 09 20:43:40 CDT 2015:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.1 - (1616546): instance a816c00e-014d-3b7d-f68f-0000030c04a0 
+Sat May 09 20:56:23 CDT 2015:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.1 - (1616546): instance a816c00e-014d-3b89-9923-0000030bdf60 
 on database directory /Users/casey/IdeaProjects/RoomAcoustics/coefficientDB/Users/casey/IdeaProjects/RoomAcoustics/coefficientDB with class loader sun.misc.Launcher$AppClassLoader@4d7e1886 
 Loaded from file:/Users/casey/Library/Preferences/IntelliJIdea14/jdbc-drivers/derby-10.11.1.1.jar
 java.vendor=Oracle Corporation

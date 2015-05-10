@@ -13,9 +13,14 @@ public class ModeCanvas extends Canvas {
 
     Room room1;
 
-    LinkedList<Integer> lengthModesInt = room1.getLengthModes();
-    LinkedList<Integer> widthModesInt = room1.getWidthModes();
-    LinkedList<Integer> heightModesInt = room1.getHeightModes();
+    //TODO: This produces null pointer exceptions. This needs fixing
+//    LinkedList<Integer> lengthModesInt = room1.getLengthModes();
+//    LinkedList<Integer> widthModesInt = room1.getWidthModes();
+//    LinkedList<Integer> heightModesInt = room1.getHeightModes();
+
+    LinkedList<Integer> lengthModesInt = new LinkedList<Integer>();
+    LinkedList<Integer> widthModesInt = new LinkedList<Integer>();
+    LinkedList<Integer> heightModesInt = new LinkedList<Integer>();
 
 
     public ModeCanvas(){
@@ -80,6 +85,7 @@ public class ModeCanvas extends Canvas {
         g.drawLine(590, 270, 590, 280);
 
 
+        // mode labels
         g.setColor(Color.WHITE);
         g.drawString("Height Modes", 136, 92);
         g.drawString("Width Modes", 136, 177);

@@ -125,6 +125,9 @@ public class ModeCanvas extends Canvas {
     }
 
 
+    //extract modes from Room and add to local LinkedList
+    //length
+    //TODO: All of these methods cause null pointer exceptions
     public LinkedList<Integer> drawLengthModes(){
         LinkedList<Integer> lengthModes = room1.getLengthModes();
 
@@ -135,7 +138,7 @@ public class ModeCanvas extends Canvas {
         }
         return lengthModesInt;
     }
-
+    //width
     public LinkedList<Integer> drawWidthModes() {
         LinkedList<Integer> widthModes = room1.getWidthModes();
 
@@ -145,7 +148,7 @@ public class ModeCanvas extends Canvas {
         }
         return widthModesInt;
     }
-
+    //height
     public LinkedList<Integer> drawHeightModes() {
         LinkedList<Integer> heightModes = room1.getHeightModes();
 

@@ -2,6 +2,7 @@ package com.casey;
 
 import sun.awt.image.ImageWatched;
 
+import java.util.DoubleSummaryStatistics;
 import java.util.LinkedList;
 
 /**
@@ -163,5 +164,108 @@ public class Calculator {
         double roomVolume = roomHeight * roomWidth * roomLength;
         room1.setRoomVolume(roomVolume);
         System.out.println("Room volume: " + roomVolume);
+    }
+
+    //wall area calculator
+    public static void wallAbsorption(Room room1) {
+
+        LinkedList<Double> wallRT60 = new LinkedList<Double>();
+        double volume = room1.getRoomVolume();
+
+        int freq = 125;
+        double roomHeight = room1.getRoomHeight();
+        double roomWidth = room1.getRoomWidth();
+        double roomLength = room1.getRoomLength();
+
+        double wallArea1 = roomHeight * roomLength;
+        double wallArea2 = roomHeight * roomWidth;
+
+        double totalWallArea = ((wallArea1 * 2) + (wallArea2 * 2));
+
+        LinkedList<Double> wallCoefficients = room1.getWallMaterialCoefficients();
+
+        //TODO: null pointer exception
+        for (double x : wallCoefficients) {
+            double coefficient = x;
+
+            double absorption = totalWallArea * coefficient;
+            double rt60 = (0.05 * volume) / absorption;
+
+            System.out.println("Reverb time for " + freq + "Hz is: " + rt60 + " seconds.");
+            wallRT60.add(rt60);
+            freq = freq * 2;
+
+        }
+        System.out.println("Wall RT60 values at frequencies 125, 250, 500, 1k, 2, and 4k: ");
+        for (double x : wallRT60) {
+            System.out.println(x + ", ");
+        }
+
+
+    }
+
+    //ceiling area calculator
+    public static void ceilingAbsorption(Room room1) {
+
+        LinkedList<Double> ceilingRT60 = new LinkedList<Double>();
+        double volume = room1.getRoomVolume();
+
+        int freq = 125;
+
+        double roomWidth = room1.getRoomWidth();
+        double roomLength = room1.getRoomLength();
+
+        double ceilingArea = roomWidth * roomLength;
+
+        LinkedList<Double> ceilingCoefficients = room1.getCeilingMaterialCoefficients();
+
+        //TODO: null pointer exception
+        for (double x : ceilingCoefficients) {
+            double coefficient = x;
+            double absorption = ceilingArea * coefficient;
+            double rt60 = (0.05 * volume) / absorption;
+
+            System.out.println("Reverb time for " + freq + "Hz is: " + rt60 + " seconds.");
+            ceilingRT60.add(rt60);
+            freq = freq * 2;
+        }
+        System.out.println("Ceiling RT60 values at frequencies 125, 250, 500, 1k, 2, and 4k: ");
+        for (double x : ceilingRT60) {
+            System.out.println(x + ", ");
+        }
+
+
+
+    }
+
+    //floor area calculator
+    public static void floorAbsorption(Room room1) {
+
+        LinkedList<Double> floorRT60 = new LinkedList<Double>();
+        double volume = room1.getRoomVolume();
+
+        int freq = 125;
+
+        double roomWidth = room1.getRoomWidth();
+        double roomLength = room1.getRoomLength();
+
+        double floorArea = roomWidth * roomLength;
+
+        LinkedList<Double> floorCoefficients = room1.getFloorMaterialCoefficients();
+
+        //TODO: null pointer exception
+        for (double x : floorCoefficients) {
+            double coefficient = x;
+            double absorption = floorArea * coefficient;
+            double rt60 = (0.05 * volume) / absorption;
+
+            System.out.println("Reverb time for " + freq + "Hz is: " + rt60 + " seconds.");
+            floorRT60.add(rt60);
+            freq = freq * 2;
+        }
+        System.out.println("Floor RT60 values at frequencies 125, 250, 500, 1k, 2, and 4k: ");
+        for (double x : floorRT60) {
+            System.out.println(x + ", ");
+        }
     }
 }

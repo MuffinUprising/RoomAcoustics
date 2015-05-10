@@ -11,8 +11,6 @@ import java.util.LinkedList;
  */
 public class UserInputPanel extends JPanel{
 
-
-//    ModeCanvas modeCanvas = new ModeCanvas();
     CoefficientController myController = new CoefficientController();
     Door door1 = new Door(0,0,null);
     Window window1 = new Window(0,0);
@@ -195,7 +193,6 @@ public class UserInputPanel extends JPanel{
                 room1.setRoomHeight(height);
                 System.out.println("height added to Room");
                 calc.heightModeCalc(room1);
-//                modeCanvas.drawHeightModes(room1);
 
             }
         });
@@ -214,7 +211,6 @@ public class UserInputPanel extends JPanel{
                 room1.setRoomWidth(width);
                 System.out.println("width added to Room");
                 calc.widthModeCalc(room1);
-//                modeCanvas.drawWidthModes(room1);
             }
         });
 
@@ -232,21 +228,9 @@ public class UserInputPanel extends JPanel{
                 room1.setRoomLength(length);
                 System.out.println("length added to Room");
                 calc.lengthModeCalc(room1);
-//                modeCanvas.drawLengthModes(room1);
 
             }
         });
-
-//        //calculate modes button
-//        c.gridx = 0;
-//        c.gridy = 8;
-//        add(calcModeButton, c);
-//        calcModeButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//
-//            }
-//        });
 
         //calculate modes button
         c.gridx = 0;
@@ -260,10 +244,6 @@ public class UserInputPanel extends JPanel{
 //                modeCanvas.drawWidthModes();
 //                modeCanvas.drawHeightModes();
 //                modeCanvas.repaint();
-
-
-
-
             }
         });
 
@@ -406,7 +386,9 @@ public class UserInputPanel extends JPanel{
         calcReverbButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                calc.wallAbsorption(room1);
+                calc.floorAbsorption(room1);
+                calc.ceilingAbsorption(room1);
             }
         });
 
@@ -417,9 +399,10 @@ public class UserInputPanel extends JPanel{
         printModes.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //TODO: Oddly enough, these do not cause null pointer exceptions - most likely has something to do with Room being instantiated here.
                 LinkedList<Integer> heightModes = room1.getHeightModes();
-                LinkedList<Integer> widthModes = room1.getHeightModes();
-                LinkedList<Integer> lengthModes = room1.getHeightModes();
+                LinkedList<Integer> widthModes = room1.getWidthModes();
+                LinkedList<Integer> lengthModes = room1.getLengthModes();
                 System.out.println("height modes: \n");
                 for (int x : heightModes) {
                     System.out.println(x + ", ");
@@ -435,23 +418,7 @@ public class UserInputPanel extends JPanel{
 
             }
         });
-
-//        //build database
-//        c.gridx = 0;
-//        c.gridy = 27;
-//        add(buildDatabase, c);
-//        buildDatabase.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                myController.setup();
-//            }
-//        });
-
     }
-
-
-
-
 
     public void paintComponent(Graphics g) {
 

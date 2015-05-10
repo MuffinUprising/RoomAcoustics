@@ -13,7 +13,7 @@ public class Window {
     protected double windowXY = windowHeight * windowWidth;
 
     //absorption for window
-    protected double[] windowRt60;
+    protected LinkedList<Double> windowRt60;
 
 
     //constructor
@@ -37,15 +37,23 @@ public class Window {
     public void setWindowXY(double windowXY) { this.windowXY = windowWidth * windowHeight; }
 
     //window rt60
-    public double[] getWindowRt60() { return windowRt60; }
-    public void setWindowRt60(double[] windowRt60) {
+    public LinkedList<Double> getWindowRt60() { return this.windowRT60(); }
+    public void setWindowRt60(LinkedList<Double> windowRt60) {
         this.windowRt60 = windowRt60;
     }
 
 
-    private static void windowRT60() {
+    private LinkedList<Double> windowRT60() {
 
-        LinkedList windowRT60 = new LinkedList<Double>(Arrays.asList(0.35, 0.25, 0.18, 0.12, 0.07, 0.04));
+        LinkedList<Double> windowRT60 = new LinkedList<Double>();
+        windowRT60.add(0.35);
+        windowRT60.add(0.25);
+        windowRT60.add(0.18);
+        windowRT60.add(0.12);
+        windowRT60.add(0.07);
+        windowRT60.add(0.04);
+
+        return windowRT60;
 
     }
 

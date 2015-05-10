@@ -54,7 +54,6 @@ public class Room {
         this.wallMaterial = wallMaterial;
         this.ceilingMaterial = ceilingMaterial;
 
-//        this.roomModes = roomModes;
         this.lengthModes = lengthModes;
         this.widthModes = widthModes;
         this.heightModes = heightModes;

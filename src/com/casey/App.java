@@ -14,6 +14,7 @@ public class App {
 
         //to rebuild database
 //        myController.setup();
+
         //connect to database
         myController.connect();
 

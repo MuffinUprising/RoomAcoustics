@@ -15,7 +15,7 @@ public class Door {
 
     //door absorption variables
     protected String doorMaterial;
-    protected double[] doorMatRt60;
+    protected LinkedList<Double> doorMatRt60;
 
     //constructor
     public Door (double doorWidth, double doorHeight, String doorMaterial) {
@@ -43,8 +43,8 @@ public class Door {
     public void setDoorMaterial(String doorMaterial) { this.doorMaterial = doorMaterial; }
 
     //door material rt60 variables
-    public double[] getDoorMatRt60() { return doorMatRt60; }
-    public void setDoorMatRt60(double[] doorMatRt60) { this.doorMatRt60 = doorMatRt60; }
+    public LinkedList<Double> getDoorMatRt60() { return doorMatRt60; }
+    public void setDoorMatRt60(LinkedList<Double> doorMatRt60) { this.doorMatRt60 = doorMatRt60; }
 
 
     //TODO: finish method to build door rt60 linkedlist

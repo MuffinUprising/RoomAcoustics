@@ -15,8 +15,7 @@ public class CalcPanel extends JPanel {
     private JLabel roomModes;
     private JLabel rt60Label;
 
-    Calculator calc;
-
+    Room room1;
 
 
     public CalcPanel(){
@@ -32,6 +31,7 @@ public class CalcPanel extends JPanel {
         roomModes = new JLabel("Room Modes");
         rt60Label = new JLabel("RT60 results");
 
+        //Jbutton to calculate modes
         JButton calcModeButton = new JButton("Calculate Modes");
 
 
@@ -60,9 +60,9 @@ public class CalcPanel extends JPanel {
         calcModeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                modeCanvas.drawLengthModes();
-//                modeCanvas.drawHeightModes();
-//                modeCanvas.drawWidthModes();
+                modeCanvas.drawLengthModes(room1);
+                modeCanvas.drawHeightModes(room1);
+                modeCanvas.drawWidthModes(room1);
             }
         });
 
@@ -86,6 +86,5 @@ public class CalcPanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-//        modeCanvas.callModes();
     }
 }

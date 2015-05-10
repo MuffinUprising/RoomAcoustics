@@ -18,21 +18,19 @@ public class Calculator {
     // any modes that are within 5Hz of a mode from another dimension is considered problematic
     // because these frequencies can meet at points in the room and amplify each other causing "boomy" spots
 
-//    LinkedList<Integer> heightModes = new LinkedList<Integer>();
-//    LinkedList<Integer> widthModes = new LinkedList<Integer>();
-//    LinkedList<Integer> lengthModes = new LinkedList<Integer>();
-
-
     public Calculator(){
 
     }
 
-//    //getters
-//    public LinkedList<Integer> getHeightModes() {return heightModes;}
-//    public LinkedList<Integer> getWidthModes() {return widthModes;}
-//    public LinkedList<Integer> getLengthModes() {return lengthModes;}
+    public static void roomAbsorptionCalc(Room room1, Door door1, Window window1) {
+        double roomVolume = room1.getRoomVolume();
+        String wallMaterial = room1.getWallMaterial();
+        String floorMaterial = room1.getFloorMaterial();
+        String ceilingMaterial = room1.getCeilingMaterial();
+        String doorMaterial = door1.getDoorMaterial();
+        LinkedList<Double> windowRT60 = window1.getWindowRt60();
 
-    public static void roomAbsorptionCalc() {
+
 
     }
 

@@ -11,13 +11,12 @@ import java.util.LinkedList;
  */
 public class ModeCanvas extends Canvas {
 
-    Room room1;
-
     //TODO: This produces null pointer exceptions. This needs fixing
 //    LinkedList<Integer> lengthModesInt = room1.getLengthModes();
 //    LinkedList<Integer> widthModesInt = room1.getWidthModes();
 //    LinkedList<Integer> heightModesInt = room1.getHeightModes();
 
+    //replacement linkedlists until i can reference the room linkedlists
     LinkedList<Integer> lengthModesInt = new LinkedList<Integer>();
     LinkedList<Integer> widthModesInt = new LinkedList<Integer>();
     LinkedList<Integer> heightModesInt = new LinkedList<Integer>();
@@ -123,19 +122,10 @@ public class ModeCanvas extends Canvas {
             }
             repaint();
         }
-
-
     }
 
-    public void callModes(){
-        drawLengthModes();
-        drawHeightModes();
-        drawWidthModes();
-    }
 
-    public LinkedList<Integer> drawLengthModes(){
-
-        LinkedList<Integer> lengthModesInt = new LinkedList<Integer>();
+    public LinkedList<Integer> drawLengthModes(Room room1){
 
         for(int x : room1.getLengthModes()){
             System.out.println(x + "\n");
@@ -149,10 +139,7 @@ public class ModeCanvas extends Canvas {
 
     }
 
-    public LinkedList<Integer> drawWidthModes() {
-
-
-        LinkedList<Integer> widthModesInt = new LinkedList<Integer>();
+    public LinkedList<Integer> drawWidthModes(Room room1) {
 
         for(int x : room1.getWidthModes()){
             System.out.println(x + "\n");
@@ -166,9 +153,7 @@ public class ModeCanvas extends Canvas {
 
     }
 
-    public LinkedList<Integer> drawHeightModes() {
-
-        LinkedList<Integer> heightModesInt = new LinkedList<Integer>();
+    public LinkedList<Integer> drawHeightModes(Room room1) {
 
         for (int x : room1.getHeightModes()){
             System.out.println(x + "\n");

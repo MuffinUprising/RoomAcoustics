@@ -1,5 +1,6 @@
 package com.casey;
 
+import javax.swing.plaf.nimbus.State;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -22,19 +23,6 @@ public class CoefficientModel {
     //  Database credentials
     private static final String USER = "temp";
     private static final String PASS = "password";
-
-
-    CoefficientController myController;
-
-    Statement statement = null;
-
-    Connection conn = null;
-
-    ResultSet rs = null;
-
-    LinkedList<Statement> allStatements = new LinkedList<Statement>();
-
-    PreparedStatement psQuery = null;
 
 
     public CoefficientModel() {
@@ -71,45 +59,54 @@ public class CoefficientModel {
         }
         catch (Exception sqle) {
 
-            System.err.println("Unable to add test data to database. Error message and stack trace follow");
+            System.err.println("Unable to add data to database. Error message and stack trace follow");
             System.err.println(sqle.getMessage());
             sqle.printStackTrace();
             return false;
         }
 
-        //clean up and exit.
-
+//      //  clean up and exit.
+//
 //        cleanup();
         return true;
     }
 
     private void createTable() throws SQLException {
 
+        Statement statement = null;
+
         try {
+            Connection conn = DriverManager.getConnection(protocol + dbName + "/Users/casey/IdeaProjects/RoomAcoustics/coefficientDB/;create=true");
+            statement = conn.createStatement();
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
             String createCoefficientTableSQL = "CREATE TABLE coefficientDB (material varchar(90), onetwofiveHz double, twofivezeroHz double, fivehundredHz double, onekHz double, twokHz double, fourkHz double)";
-            statement.executeUpdate(createCoefficientTableSQL);
-            System.out.println("Created coefficient table");
-
-
-        } catch (SQLException sqle) {
+        if (statement != null) {
+            try {
+                statement.executeUpdate(createCoefficientTableSQL);
+            } catch (SQLException sqle) {
             //Seems the table already exists, or some other error has occurred.
             //Let's try to check if the DB exists already by checking the error code returned. If so, delete it and re-create it
 
             throw sqle;
         }
+        }
+            statement.executeUpdate(createCoefficientTableSQL);
+            System.out.println("Created coefficient table");
+
     }
 
     public void createConnection() throws Exception {
 
-        try{
-            Class.forName(driver);  //Instantiate a driver object
-        }catch(ClassNotFoundException e){
-            e.printStackTrace();
-        }
         try {
-            conn = DriverManager.getConnection(protocol + dbName + "/Users/casey/IdeaProjects/RoomAcoustics/coefficientDB/;create=true", USER, PASS);
-            statement = conn.createStatement();
-            allStatements.add(statement);
+            try{
+                Class.forName(driver);  //Instantiate a driver object
+            }catch(ClassNotFoundException e){
+                e.printStackTrace();
+            }
+            Connection conn = DriverManager.getConnection(protocol + dbName + "/Users/casey/IdeaProjects/RoomAcoustics/coefficientDB/;create=true", USER, PASS);
+            conn.createStatement();
             System.out.println("Connection created");
         } catch (Exception e) {
             //There are a lot of things that could go wrong here. Should probably handle them all separately but have not done so here.
@@ -120,13 +117,14 @@ public class CoefficientModel {
     }
 
     private void addTestData() throws Exception {
+
         // Add data.
-        if (statement == null) {
-            //This isn't going to work
-            throw new Exception("Statement not initialized");
-        }
+        Statement statement = null;
+
         try {
 
+            Connection conn = DriverManager.getConnection(protocol + dbName + "/Users/casey/IdeaProjects/RoomAcoustics/coefficientDB/;create=true");
+            conn.createStatement();
             System.out.println("Adding materials to database..");
 
             //floor materials
@@ -241,6 +239,9 @@ public class CoefficientModel {
             statement.executeUpdate(addRecord51);
             System.out.println("Coefficients added to database");
 
+            closeIt(conn);
+
+
         }
         catch (SQLException sqle) {
             System.err.println("Unable to add test data, check validity of SQL statements?");
@@ -250,19 +251,50 @@ public class CoefficientModel {
 
             throw sqle;
         }
+        closeIt(statement);
     }
 
     //wall material coefficient LinkedList
     public LinkedList<Double> wallMaterialCoefficients(String wallMaterial) {
 
         LinkedList<Double> wallMaterialCoefficients = new LinkedList<Double>();
+
         try{
+            Connection conn = DriverManager.getConnection(protocol + dbName + "/Users/casey/IdeaProjects/RoomAcoustics/coefficientDB/;create=true");
 
             String materialLower = wallMaterial.toLowerCase();
             String materialLookup = "SELECT * FROM coefficientDB WHERE LOWER(material) LIKE ?";
-            psQuery = conn.prepareStatement(materialLookup);
-            psQuery.setString(1, materialLower);
-            rs = psQuery.executeQuery();
+
+            try{
+                PreparedStatement psQuery = conn.prepareStatement(materialLookup);
+                psQuery.setString(1, materialLower);
+                ResultSet rs = psQuery.executeQuery();
+                try{
+                    while (rs.next()){
+                        double coefficient125 = rs.getDouble("onetwofiveHz");
+                        wallMaterialCoefficients.add(coefficient125);
+                        double coefficient250 = rs.getDouble("twofivezeroHz");
+                        wallMaterialCoefficients.add(coefficient250);
+                        double coefficient500 = rs.getDouble("fivehundredHz");
+                        wallMaterialCoefficients.add(coefficient500);
+                        double coefficient1k = rs.getDouble("onekHz");
+                        wallMaterialCoefficients.add(coefficient1k);
+                        double coefficient2k = rs.getDouble("twokHz");
+                        wallMaterialCoefficients.add(coefficient2k);
+                        double coefficient4k = rs.getDouble("fourkHz");
+                        wallMaterialCoefficients.add(coefficient4k);
+                    }
+                    closeIt(conn);
+                    closeIt(psQuery);
+                    closeIt(rs);
+
+                }catch(SQLException e) {
+                    e.printStackTrace();
+                }
+
+            }catch(SQLException e) {
+                e.printStackTrace();
+            }
 
         }catch (SQLException e){
             System.out.println("Error in search operation:");
@@ -272,25 +304,7 @@ public class CoefficientModel {
             System.out.println("Null pointer exception:");
             e.printStackTrace();
         }
-        try{
-            while (rs.next()){
-                double coefficient125 = rs.getDouble("onetwofiveHz");
-                wallMaterialCoefficients.add(coefficient125);
-                double coefficient250 = rs.getDouble("twofivezeroHz");
-                wallMaterialCoefficients.add(coefficient250);
-                double coefficient500 = rs.getDouble("fivehundredHz");
-                wallMaterialCoefficients.add(coefficient500);
-                double coefficient1k = rs.getDouble("onekHz");
-                wallMaterialCoefficients.add(coefficient1k);
-                double coefficient2k = rs.getDouble("twokHz");
-                wallMaterialCoefficients.add(coefficient2k);
-                double coefficient4k = rs.getDouble("fourkHz");
-                wallMaterialCoefficients.add(coefficient4k);
-            }
 
-        }catch(SQLException e) {
-            e.printStackTrace();
-        }
 
         return wallMaterialCoefficients;
 
@@ -301,11 +315,38 @@ public class CoefficientModel {
 
         LinkedList<Double> floorMaterialCoefficients = new LinkedList<Double>();
         try{
+            Connection conn = DriverManager.getConnection(protocol + dbName + "/Users/casey/IdeaProjects/RoomAcoustics/coefficientDB/;create=true");
+
             String materialLower = floorMaterial.toLowerCase();
             String materialLookup = "SELECT * FROM coefficientDB WHERE LOWER(material) LIKE ?";
-            psQuery = conn.prepareStatement(materialLookup);
+            PreparedStatement psQuery = conn.prepareStatement(materialLookup);
             psQuery.setString(1, materialLower);
-            rs = psQuery.executeQuery();
+            ResultSet rs = psQuery.executeQuery();
+
+            try{
+
+                while (rs.next()){
+                    double coefficient125 = rs.getDouble("onetwofiveHz");
+                    floorMaterialCoefficients.add(coefficient125);
+                    double coefficient250 = rs.getDouble("twofivezeroHz");
+                    floorMaterialCoefficients.add(coefficient250);
+                    double coefficient500 = rs.getDouble("fivehundredHz");
+                    floorMaterialCoefficients.add(coefficient500);
+                    double coefficient1k = rs.getDouble("onekHz");
+                    floorMaterialCoefficients.add(coefficient1k);
+                    double coefficient2k = rs.getDouble("twokHz");
+                    floorMaterialCoefficients.add(coefficient2k);
+                    double coefficient4k = rs.getDouble("fourkHz");
+                    floorMaterialCoefficients.add(coefficient4k);
+                }
+
+                closeIt(conn);
+                closeIt(psQuery);
+                closeIt(rs);
+
+            }catch(SQLException e) {
+                e.printStackTrace();
+            }
 
         }catch (SQLException e){
             e.printStackTrace();
@@ -315,26 +356,7 @@ public class CoefficientModel {
             System.out.println("Null pointer exception:");
             e.printStackTrace();
         }
-        try{
 
-            while (rs.next()){
-                double coefficient125 = rs.getDouble("onetwofiveHz");
-                floorMaterialCoefficients.add(coefficient125);
-                double coefficient250 = rs.getDouble("twofivezeroHz");
-                floorMaterialCoefficients.add(coefficient250);
-                double coefficient500 = rs.getDouble("fivehundredHz");
-                floorMaterialCoefficients.add(coefficient500);
-                double coefficient1k = rs.getDouble("onekHz");
-                floorMaterialCoefficients.add(coefficient1k);
-                double coefficient2k = rs.getDouble("twokHz");
-                floorMaterialCoefficients.add(coefficient2k);
-                double coefficient4k = rs.getDouble("fourkHz");
-                floorMaterialCoefficients.add(coefficient4k);
-            }
-
-        }catch(SQLException e) {
-            e.printStackTrace();
-        }
 
         return floorMaterialCoefficients;
     }
@@ -344,41 +366,48 @@ public class CoefficientModel {
 
         LinkedList<Double> ceilingMaterialCoefficients = new LinkedList<Double>();
         try {
+            Connection conn = DriverManager.getConnection(protocol + dbName + "/Users/casey/IdeaProjects/RoomAcoustics/coefficientDB/;create=true");
 
             String materialLower = ceilingMaterial.toLowerCase();
             String materialLookup = "SELECT * FROM coefficientDB WHERE LOWER(material) LIKE ?";
-            psQuery = conn.prepareStatement(materialLookup);
+            PreparedStatement psQuery = conn.prepareStatement(materialLookup);
             psQuery.setString(1, materialLower);
-            rs = psQuery.executeQuery();
+            ResultSet rs = psQuery.executeQuery();
+
+            try {
+                while (rs.next()) {
+                    String ceofficient = rs.getString("material");
+                    double coefficient125 = rs.getDouble("onetwofiveHz");
+                    ceilingMaterialCoefficients.add(coefficient125);
+                    double coefficient250 = rs.getDouble("twofivezeroHz");
+                    ceilingMaterialCoefficients.add(coefficient250);
+                    double coefficient500 = rs.getDouble("fivehundredHz");
+                    ceilingMaterialCoefficients.add(coefficient500);
+                    double coefficient1k = rs.getDouble("onekHz");
+                    ceilingMaterialCoefficients.add(coefficient1k);
+                    double coefficient2k = rs.getDouble("twokHz");
+                    ceilingMaterialCoefficients.add(coefficient2k);
+                    double coefficient4k = rs.getDouble("fourkHz");
+                    ceilingMaterialCoefficients.add(coefficient4k);
+                }
+
+                closeIt(conn);
+                closeIt(psQuery);
+                closeIt(rs);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+
+            }catch (NullPointerException e) {
+                System.out.println("Null pointer exception:");
+                e.printStackTrace();
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error in search operation");
         }
-        try {
-            while (rs.next()) {
-                String ceofficient = rs.getString("material");
-                double coefficient125 = rs.getDouble("onetwofiveHz");
-                ceilingMaterialCoefficients.add(coefficient125);
-                double coefficient250 = rs.getDouble("twofivezeroHz");
-                ceilingMaterialCoefficients.add(coefficient250);
-                double coefficient500 = rs.getDouble("fivehundredHz");
-                ceilingMaterialCoefficients.add(coefficient500);
-                double coefficient1k = rs.getDouble("onekHz");
-                ceilingMaterialCoefficients.add(coefficient1k);
-                double coefficient2k = rs.getDouble("twokHz");
-                ceilingMaterialCoefficients.add(coefficient2k);
-                double coefficient4k = rs.getDouble("fourkHz");
-                ceilingMaterialCoefficients.add(coefficient4k);
-            }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        }catch (NullPointerException e) {
-            System.out.println("Null pointer exception:");
-            e.printStackTrace();
-        }
 
         return ceilingMaterialCoefficients;
     }
@@ -388,51 +417,61 @@ public class CoefficientModel {
 
         LinkedList<Double> doorMaterialCoefficients = new LinkedList<Double>();
         try {
+            Connection conn = DriverManager.getConnection(protocol + dbName + "/Users/casey/IdeaProjects/RoomAcoustics/coefficientDB/;create=true");
 
             String materialLower = doorMaterial.toLowerCase();
             String materialLookup = "SELECT * FROM coefficientDB WHERE LOWER(material) LIKE ?";
-            psQuery = conn.prepareStatement(materialLookup);
+            PreparedStatement psQuery = conn.prepareStatement(materialLookup);
             psQuery.setString(1, materialLower);
-            rs = psQuery.executeQuery();
+            ResultSet rs = psQuery.executeQuery();
+
+            try {
+                while (rs.next()) {
+                    double coefficient125 = rs.getDouble("onetwofiveHz");
+                    doorMaterialCoefficients.add(coefficient125);
+                    double coefficient250 = rs.getDouble("twofivezeroHz");
+                    doorMaterialCoefficients.add(coefficient250);
+                    double coefficient500 = rs.getDouble("fivehundredHz");
+                    doorMaterialCoefficients.add(coefficient500);
+                    double coefficient1k = rs.getDouble("onekHz");
+                    doorMaterialCoefficients.add(coefficient1k);
+                    double coefficient2k = rs.getDouble("twokHz");
+                    doorMaterialCoefficients.add(coefficient2k);
+                    double coefficient4k = rs.getDouble("fourkHz");
+                    doorMaterialCoefficients.add(coefficient4k);
+                }
+
+                closeIt(conn);
+                closeIt(psQuery);
+                closeIt(rs);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+
+            }catch (NullPointerException e) {
+                System.out.println("Null pointer exception:");
+                e.printStackTrace();
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error in search operation");
         }
-        try {
-            while (rs.next()) {
-                double coefficient125 = rs.getDouble("onetwofiveHz");
-                doorMaterialCoefficients.add(coefficient125);
-                double coefficient250 = rs.getDouble("twofivezeroHz");
-                doorMaterialCoefficients.add(coefficient250);
-                double coefficient500 = rs.getDouble("fivehundredHz");
-                doorMaterialCoefficients.add(coefficient500);
-                double coefficient1k = rs.getDouble("onekHz");
-                doorMaterialCoefficients.add(coefficient1k);
-                double coefficient2k = rs.getDouble("twokHz");
-                doorMaterialCoefficients.add(coefficient2k);
-                double coefficient4k = rs.getDouble("fourkHz");
-                doorMaterialCoefficients.add(coefficient4k);
-            }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        }catch (NullPointerException e) {
-            System.out.println("Null pointer exception:");
-            e.printStackTrace();
-        }
 
         return doorMaterialCoefficients;
     }
 
     public void printDatabase(){
         try{
+            Connection conn = DriverManager.getConnection(protocol + dbName + "/Users/casey/IdeaProjects/RoomAcoustics/coefficientDB/;create=true");
 
             String printDatabase = "SELECT * FROM coefficientDB";
-            rs = statement.executeQuery(printDatabase);
 
             try {
+                PreparedStatement ps = conn.prepareStatement(printDatabase);
+                ResultSet rs = ps.executeQuery();
+
                 while (rs.next()) {
                     String material = rs.getString("material");
                     double coefficient125 = rs.getDouble("onetwofiveHz");
@@ -449,6 +488,8 @@ public class CoefficientModel {
                             + " 2kHz: " + coefficient2k
                             + " 4kHz: " + coefficient4k);
                 }
+                closeIt(ps);
+                closeIt(rs);
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -457,46 +498,66 @@ public class CoefficientModel {
                 System.out.println("Null pointer exception:");
                 e.printStackTrace();
             }
+            closeIt(conn);
 
         }catch(SQLException e){
             e.printStackTrace();
 
         }
+
+
     }
 
-    //cleanup method
-    public void cleanup() {
+//    //cleanup method
+//    public void cleanup() {
+//        try {
+//            Connection conn = DriverManager.getConnection(protocol + dbName + ";create=true");
+//            conn.prepareStatement()
+//            ResultSet rs = null;
+//            if (rs != null) {
+//                rs.close();  //Close result set
+//                System.out.println("ResultSet closed");
+//            }
+//
+//            //Close all of the statements. Stored a reference to each statement in allStatements so we can loop over all of them and close them all.
+//
+//            for (Statement s : allStatements) {
+//
+//                if (s != null) {
+//                    try {
+//                        s.close();
+//                        System.out.println("Statement closed");
+//                    } catch (SQLException se) {
+//                        System.out.println("Error closing statement");
+//                        se.printStackTrace();
+//                    }
+//                }
+//            }
+//            try {
+//                if (conn != null) {
+//                    conn.close();  //Close connection to database
+//                    System.out.println("Database connection closed");
+//                }
+//            } catch (SQLException se) {
+//                se.printStackTrace();
+//            }
+//        } catch (SQLException se) {
+//            se.printStackTrace();
+//        }
+//
+//
+//
+//    }
+
+    private void closeIt(AutoCloseable closeable) {
         try {
-            if (rs != null) {
-                rs.close();  //Close result set
-                System.out.println("ResultSet closed");
-            }
-        } catch (SQLException se) {
-            se.printStackTrace();
+            closeable.close();
         }
-
-        //Close all of the statements. Stored a reference to each statement in allStatements so we can loop over all of them and close them all.
-        for (Statement s : allStatements) {
-
-            if (s != null) {
-                try {
-                    s.close();
-                    System.out.println("Statement closed");
-                } catch (SQLException se) {
-                    System.out.println("Error closing statement");
-                    se.printStackTrace();
-                }
-            }
+        catch (SQLException sqe) {
+            System.out.println("Error closing");
+        } catch (Exception e) {
+            System.out.println("Error closing");
         }
-        try {
-            if (conn != null) {
-                conn.close();  //Close connection to database
-                System.out.println("Database connection closed");
-            }
-        } catch (SQLException se) {
-            se.printStackTrace();
-        }
-
     }
 
 }

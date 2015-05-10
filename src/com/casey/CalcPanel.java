@@ -1,5 +1,7 @@
 package com.casey;
 
+import com.sun.javafx.sg.prism.NGShape;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -16,6 +18,7 @@ public class CalcPanel extends JPanel {
     private JLabel rt60Label;
 
     Room room1;
+    Calculator calc;
 
 
     public CalcPanel(){
@@ -52,19 +55,6 @@ public class CalcPanel extends JPanel {
         c.gridx =0;
         c.gridy = 2;
         add(modeCanvas, c);
-
-        //calculate modes button
-        c.gridx = 0;
-        c.gridy = 3;
-        add(calcModeButton, c);
-        calcModeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                modeCanvas.drawLengthModes(room1);
-                modeCanvas.drawHeightModes(room1);
-                modeCanvas.drawWidthModes(room1);
-            }
-        });
 
         //RT60 label
         c.gridx = 0;

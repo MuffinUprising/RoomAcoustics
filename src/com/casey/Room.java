@@ -10,6 +10,9 @@ import java.util.DoubleSummaryStatistics;
  */
 public class Room {
 
+    Window window1;
+    Door door1;
+//    Calculator calc;
 
     //room dimensions
     protected double roomHeight;
@@ -24,11 +27,14 @@ public class Room {
     protected double roomVolume;
 
 //    //measurement variables
-//    protected Double[] roomModes;
     protected LinkedList<Integer>  lengthModes;
     protected LinkedList<Integer> widthModes;
     protected LinkedList<Integer> heightModes;
-//    protected Double[] rt60actual;
+    protected LinkedList<Double> floorMaterialCoefficients;
+    protected LinkedList<Double> wallMaterialCoefficients;
+    protected LinkedList<Double> ceilingMaterialCoefficients;
+//    protected LinkedList<Double> doorMaterialCoefficients;
+//    protected LinkedList<Double> windowMaterialCoefficients;
 //    protected Double[] rt60Goal;
 //    protected Double[] absorptionNeeded;
 
@@ -42,7 +48,13 @@ public class Room {
                 String ceilingMaterial,
                 LinkedList<Integer> lengthModes,
                 LinkedList<Integer> widthModes,
-                LinkedList<Integer> heightModes)
+                LinkedList<Integer> heightModes,
+                LinkedList<Double> floorMaterialCoefficients,
+                LinkedList<Double> wallMaterialCoefficients,
+                LinkedList<Double> ceilingMaterialCoefficients
+//                LinkedList<Double> doorMaterialCoefficients,
+//                LinkedList<Double> windowMaterialCoefficients
+                )
     {
 
         this.roomHeight = roomHeight;
@@ -57,6 +69,12 @@ public class Room {
         this.lengthModes = lengthModes;
         this.widthModes = widthModes;
         this.heightModes = heightModes;
+        this.floorMaterialCoefficients = floorMaterialCoefficients;
+        this.wallMaterialCoefficients = wallMaterialCoefficients;
+        this.ceilingMaterialCoefficients = ceilingMaterialCoefficients;
+        this.roomVolume = roomVolume;
+//        this.doorMaterialCoefficients = door1.getDoorMatRt60();
+//        this.windowMaterialCoefficients = window1.getWindowRt60();
 //        this.rt60actual = rt60actual;
 //        this.rt60Goal = rt60Goal;
 //        this.absorptionNeeded = absorptionNeeded;
@@ -91,18 +109,69 @@ public class Room {
 
     //room volume
     public double getRoomVolume() { return roomVolume; }
+    public void setRoomVolume(double roomVolume) { this.roomVolume = roomVolume; }
 
     //length modes
-    public LinkedList<Integer> getLengthModes() { return lengthModes; }
+    public LinkedList<Integer> getLengthModes() {
+//        System.out.println("Length modes: \n");
+//        for (int x : lengthModes){
+//            System.out.println(x + ", ");
+//        }
+        return lengthModes;
+    }
     public void setLengthModes(LinkedList<Integer> lengthModes) { this.lengthModes = lengthModes; }
 
     //width modes
-    public LinkedList<Integer> getWidthModes() { return widthModes; }
+    public LinkedList<Integer> getWidthModes() {
+//        System.out.println("Width modes: \n");
+//        for (int x : widthModes) {
+//            System.out.println(x + ", ");
+//        }
+        return widthModes;
+    }
     public void setWidthModes(LinkedList<Integer> widthModes) { this.widthModes = widthModes; }
 
     //height modes
-    public LinkedList<Integer> getHeightModes() { return heightModes; }
+    public LinkedList<Integer> getHeightModes() {
+//        System.out.println("Height modes: \n");
+//        for (int x : heightModes) {
+//            System.out.println(x + ", ");
+//        }
+        return heightModes;
+    }
     public void setHeightModes(LinkedList<Integer> heightModes) { this.heightModes = heightModes; }
+
+    //floor material coefficients
+    public LinkedList<Double> getFloorMaterialCoefficients() { return floorMaterialCoefficients; }
+    public void setFloorMaterialCoefficients(LinkedList<Double> floorMaterialCoefficients) { this.floorMaterialCoefficients = floorMaterialCoefficients; }
+
+    //door material coefficients
+    public LinkedList<Double> getWallMaterialCoefficients() { return wallMaterialCoefficients; }
+    public void setWallMaterialCoefficients(LinkedList<Double> wallMaterialCoefficients) { this.wallMaterialCoefficients = wallMaterialCoefficients; }
+
+    //ceiling material coefficients
+    public LinkedList<Double> getCeilingMaterialCoefficients() { return ceilingMaterialCoefficients; }
+    public void setCeilingMaterialCoefficients(LinkedList<Double> ceilingMaterialCoefficients) { this.ceilingMaterialCoefficients = ceilingMaterialCoefficients; }
+
+    //door material coefficients
+//    public LinkedList<Double> getDoorMaterialCoefficients() { return doorMaterialCoefficients; }
+//    public void setDoorMaterialCoefficients(LinkedList<Double> doorMaterialCoefficients) { this.doorMaterialCoefficients = doorMaterialCoefficients; }
+//
+//    //window material (static because windows are made of glass)
+//    public LinkedList<Double> getWindowMaterialCoefficients() { return windowMaterialCoefficients; }
+//    public void setWindowMaterialCoefficients(LinkedList<Double> windowMaterialCoefficients) { this.windowMaterialCoefficients = windowMaterialCoefficients; }
+
+    public static void lengthModesFromCalc (Calculator calc){
+
+    }
+
+    public static void widthModesFromCalc (){
+
+    }
+
+    public static void heightModesFromCalc (){
+
+    }
 
     @Override
     public String toString(){

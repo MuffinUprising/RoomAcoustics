@@ -11,15 +11,17 @@ import java.util.LinkedList;
  */
 public class ModeCanvas extends Canvas {
 
-    //TODO: This produces null pointer exceptions. This needs fixing
-//    LinkedList<Integer> lengthModesInt = room1.getLengthModes();
-//    LinkedList<Integer> widthModesInt = room1.getWidthModes();
-//    LinkedList<Integer> heightModesInt = room1.getHeightModes();
+    Room room1;
 
-    //replacement linkedlists until i can reference the room linkedlists
+    //TODO: This produces null pointer exceptions. This needs fixing
     LinkedList<Integer> lengthModesInt = new LinkedList<Integer>();
     LinkedList<Integer> widthModesInt = new LinkedList<Integer>();
     LinkedList<Integer> heightModesInt = new LinkedList<Integer>();
+
+    //replacement linkedlists until i can reference the room linkedlists
+
+
+
 
 
     public ModeCanvas(){
@@ -98,7 +100,6 @@ public class ModeCanvas extends Canvas {
                 //draw mode on canvas
                 g.drawOval(5,5,lengthX,80);
             }
-            repaint();
         }
 
         //draw width modes
@@ -109,7 +110,6 @@ public class ModeCanvas extends Canvas {
                 //draw mode on canvas
                 g.drawOval(5,5,widthX,150);
             }
-            repaint();
         }
 
         //draw height modes
@@ -120,50 +120,39 @@ public class ModeCanvas extends Canvas {
                 //draw mode on canvas
                 g.drawOval(5,5,heightX,230);
             }
-            repaint();
         }
+        repaint();
     }
 
 
-    public LinkedList<Integer> drawLengthModes(Room room1){
+    public LinkedList<Integer> drawLengthModes(){
+        LinkedList<Integer> lengthModes = room1.getLengthModes();
 
-        for(int x : room1.getLengthModes()){
-            System.out.println(x + "\n");
+        for(int x : lengthModes){
+            System.out.println(x + ", ");
             lengthModesInt.add(x);
-        }
-        for (int y : lengthModesInt) {
-            System.out.println(y + "\n");
-        }
 
+        }
         return lengthModesInt;
-
     }
 
-    public LinkedList<Integer> drawWidthModes(Room room1) {
+    public LinkedList<Integer> drawWidthModes() {
+        LinkedList<Integer> widthModes = room1.getWidthModes();
 
-        for(int x : room1.getWidthModes()){
-            System.out.println(x + "\n");
+        for (int x : widthModes) {
+            System.out.println(x + ", ");
             widthModesInt.add(x);
         }
-
-        for (int y : widthModesInt) {
-            System.out.println(y + "\n");
-        }
         return widthModesInt;
-
     }
 
-    public LinkedList<Integer> drawHeightModes(Room room1) {
+    public LinkedList<Integer> drawHeightModes() {
+        LinkedList<Integer> heightModes = room1.getHeightModes();
 
-        for (int x : room1.getHeightModes()){
-            System.out.println(x + "\n");
+        for (int x : heightModes) {
+            System.out.println(x + ", ");
             heightModesInt.add(x);
         }
-
-        for (int y : heightModesInt) {
-            System.out.println(y + "\n");
-        }
         return heightModesInt;
-
     }
 }

@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 
 /**
  * Created by casey on 5/2/15.
@@ -15,8 +16,9 @@ public class UserInputPanel extends JPanel{
     CoefficientController myController = new CoefficientController();
     Door door1 = new Door(0,0,null);
     Window window1 = new Window(0,0);
-    Room room1 = new Room(0,0,0,0,null,null,null,null,null,null);
+    Room room1 = new Room(0,0,0,0,null,null,null,null,null,null,null,null,null);
     Calculator calc = new Calculator();
+    ModeCanvas modeCanvas;
 
 
     private JLabel roomDimensionsLabel;
@@ -44,7 +46,7 @@ public class UserInputPanel extends JPanel{
     private JComboBox doorMaterialComboBox;
     private JButton calcModeButton;
     private JButton calcReverbButton;
-    private JButton printDatabase;
+    private JButton printModes;
     private JButton buildDatabase;
 
     public UserInputPanel() {
@@ -84,7 +86,7 @@ public class UserInputPanel extends JPanel{
         doorWidthTextField = new JTextField();
 
         //print database for testing
-        printDatabase = new JButton("Print Database");
+        printModes = new JButton("Print Modes");
 
         //materials combo boxes
         //wall
@@ -193,6 +195,8 @@ public class UserInputPanel extends JPanel{
                 room1.setRoomHeight(height);
                 System.out.println("height added to Room");
                 calc.heightModeCalc(room1);
+//                modeCanvas.drawHeightModes(room1);
+
             }
         });
 
@@ -210,6 +214,7 @@ public class UserInputPanel extends JPanel{
                 room1.setRoomWidth(width);
                 System.out.println("width added to Room");
                 calc.widthModeCalc(room1);
+//                modeCanvas.drawWidthModes(room1);
             }
         });
 
@@ -227,6 +232,7 @@ public class UserInputPanel extends JPanel{
                 room1.setRoomLength(length);
                 System.out.println("length added to Room");
                 calc.lengthModeCalc(room1);
+//                modeCanvas.drawLengthModes(room1);
 
             }
         });
@@ -241,6 +247,25 @@ public class UserInputPanel extends JPanel{
 //
 //            }
 //        });
+
+        //calculate modes button
+        c.gridx = 0;
+        c.gridy = 8;
+        add(calcModeButton, c);
+        calcModeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                calc.roomVolumeCalc(room1);
+//                modeCanvas.drawLengthModes();
+//                modeCanvas.drawWidthModes();
+//                modeCanvas.drawHeightModes();
+//                modeCanvas.repaint();
+
+
+
+
+            }
+        });
 
         //window height label and text field
         c.gridx = 0;
@@ -385,14 +410,29 @@ public class UserInputPanel extends JPanel{
             }
         });
 
-        //print database button
+        //print modes button
         c.gridx = 0;
         c.gridy = 26;
-        add(printDatabase, c);
-        printDatabase.addActionListener(new ActionListener() {
+        add(printModes, c);
+        printModes.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                myController.printAll();
+                LinkedList<Integer> heightModes = room1.getHeightModes();
+                LinkedList<Integer> widthModes = room1.getHeightModes();
+                LinkedList<Integer> lengthModes = room1.getHeightModes();
+                System.out.println("height modes: \n");
+                for (int x : heightModes) {
+                    System.out.println(x + ", ");
+                }
+                System.out.println("width modes: \n");
+                for (int x : widthModes) {
+                    System.out.println(x + ", ");
+                }
+                System.out.println("length modes: \n");
+                for (int x : lengthModes) {
+                    System.out.println(x + ", ");
+                }
+
             }
         });
 

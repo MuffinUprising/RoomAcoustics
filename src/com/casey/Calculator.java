@@ -18,6 +18,7 @@ public class Calculator {
     // any modes that are within 5Hz of a mode from another dimension is considered problematic
     // because these frequencies can meet at points in the room and amplify each other causing "boomy" spots
 
+
     public Calculator(){
 
     }
@@ -44,6 +45,7 @@ public class Calculator {
 
         //get dimensions from Room and determine fundamental
         double height = room1.getRoomHeight();
+        System.out.println("Room height: " + height);
         double heightFundamental = 563.5 / height;
         //convert to integer
         int fundamentalInt = (int)Math.round(heightFundamental);
@@ -67,11 +69,14 @@ public class Calculator {
         }
         System.out.printf("height modes calculated\n");
 
-        for (double x : heightModes) {
+        for (int x : heightModes) {
 
             System.out.println(x + "\n");
         }
         room1.setHeightModes(heightModes);
+
+
+
     }
 
     public static void widthModeCalc (Room room1) {
@@ -80,6 +85,7 @@ public class Calculator {
 
         //get dimensions from Room and determine fundamental
         double width = room1.getRoomWidth();
+        System.out.println("Room width: " + width);
         double widthFundamental = 563.5 / width;
         //convert to integer
         int fundamentalInt = (int)Math.round(widthFundamental);
@@ -103,8 +109,9 @@ public class Calculator {
         }
         System.out.printf("width modes calculated\n");
 
-        for(double x : widthModes){
+        for(int x : widthModes){
             System.out.println(x + "\n");
+
         }
         room1.setWidthModes(widthModes);
 
@@ -116,6 +123,7 @@ public class Calculator {
 
         //get dimensions from Room and determine fundamental
         double length = room1.getRoomLength();
+        System.out.println("Room length: " + length);
         double lengthFundamental = 563.5 / length;
         //convert to integer
         int fundamentalInt = (int)Math.round(lengthFundamental);
@@ -139,9 +147,21 @@ public class Calculator {
         }
         System.out.printf("length modes calculated\n");
 
-        for (double x : lengthModes) {
+        for (int x : lengthModes) {
             System.out.println(x + "\n");
         }
         room1.setLengthModes(lengthModes);
+
+    }
+
+    //room volume calculator
+    public static void roomVolumeCalc(Room room1) {
+        double roomHeight = room1.getRoomHeight();
+        double roomWidth = room1.getRoomWidth();
+        double roomLength = room1.getRoomLength();
+
+        double roomVolume = roomHeight * roomWidth * roomLength;
+        room1.setRoomVolume(roomVolume);
+        System.out.println("Room volume: " + roomVolume);
     }
 }

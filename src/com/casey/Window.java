@@ -7,6 +7,8 @@ import java.util.Arrays;
  */
 public class Window {
 
+    Room room1;
+
     //window and door dimensions
     protected double windowWidth;
     protected double windowHeight;
@@ -34,7 +36,6 @@ public class Window {
 
     //window x and y
     public double getWindowXY() { return windowXY; }
-    public void setWindowXY(double windowXY) { this.windowXY = windowWidth * windowHeight; }
 
     //window rt60
     public LinkedList<Double> getWindowRt60() { return this.windowRT60(); }
@@ -53,7 +54,9 @@ public class Window {
         windowRT60.add(0.07);
         windowRT60.add(0.04);
 
+//        room1.setWindowMaterialCoefficients(windowRT60);
         return windowRT60;
+
 
     }
 

@@ -389,6 +389,8 @@ public class UserInputPanel extends JPanel{
                 calc.wallAbsorption(room1);
                 calc.floorAbsorption(room1);
                 calc.ceilingAbsorption(room1);
+                calc.doorAbsorption(room1, door1);
+                calc.windowAbsorption(room1, window1);
             }
         });
 

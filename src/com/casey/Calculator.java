@@ -19,18 +19,19 @@ public class Calculator {
     // any modes that are within 5Hz of a mode from another dimension is considered problematic
     // because these frequencies can meet at points in the room and amplify each other causing "boomy" spots
 
+    LinkedList<Double> wallRT60 = new LinkedList<Double>();
+    LinkedList<Double> ceilingRT60 = new LinkedList<Double>();
+    LinkedList<Double> floorRT60 = new LinkedList<Double>();
+    LinkedList<Double> doorRT60 = new LinkedList<Double>();
+    LinkedList<Double> windowRT60 = new LinkedList<Double>();
 
     public Calculator(){
+
 
     }
 
     public static void roomAbsorptionCalc(Room room1, Door door1, Window window1) {
-        double roomVolume = room1.getRoomVolume();
-        String wallMaterial = room1.getWallMaterial();
-        String floorMaterial = room1.getFloorMaterial();
-        String ceilingMaterial = room1.getCeilingMaterial();
-        String doorMaterial = door1.getDoorMaterial();
-        LinkedList<Double> windowRT60 = window1.getWindowRt60();
+
 
 
 
@@ -40,6 +41,7 @@ public class Calculator {
 
     }
 
+    //height mode calculator
     public static void heightModeCalc (Room room1) {
 
         LinkedList<Integer> heightModes = new LinkedList<Integer>();
@@ -80,6 +82,7 @@ public class Calculator {
 
     }
 
+    //width mode calculator
     public static void widthModeCalc (Room room1) {
 
         LinkedList<Integer> widthModes = new LinkedList<Integer>();
@@ -118,6 +121,7 @@ public class Calculator {
 
     }
 
+    //length mode calculator
     public static void lengthModeCalc (Room room1){
 
         LinkedList<Integer> lengthModes = new LinkedList<Integer>();
@@ -166,10 +170,9 @@ public class Calculator {
         System.out.println("Room volume: " + roomVolume);
     }
 
-    //wall area calculator
-    public static void wallAbsorption(Room room1) {
+    //wall absorption calculator
+    public static void wallAbsorption(Room room1, LinkedList<Double> wallRT60) {
 
-        LinkedList<Double> wallRT60 = new LinkedList<Double>();
         double volume = room1.getRoomVolume();
 
         int freq = 125;
@@ -204,10 +207,9 @@ public class Calculator {
 
     }
 
-    //ceiling area calculator
-    public static void ceilingAbsorption(Room room1) {
+    //ceiling absorption calculator
+    public static void ceilingAbsorption(Room room1, LinkedList<Double> ceilingRT60) {
 
-        LinkedList<Double> ceilingRT60 = new LinkedList<Double>();
         double volume = room1.getRoomVolume();
 
         int freq = 125;
@@ -238,10 +240,10 @@ public class Calculator {
 
     }
 
-    //floor area calculator
-    public static void floorAbsorption(Room room1) {
+    //floor absorption calculator
+    public static void floorAbsorption(Room room1, LinkedList<Double> floorRT60) {
 
-        LinkedList<Double> floorRT60 = new LinkedList<Double>();
+
         double volume = room1.getRoomVolume();
 
         int freq = 125;
@@ -267,5 +269,84 @@ public class Calculator {
         for (double x : floorRT60) {
             System.out.println(x + ", ");
         }
+    }
+
+    //door absorption calculator
+    public static void doorAbsorption(Room room1, Door door1, LinkedList<Double> doorRT60){
+
+
+        double volume = room1.getRoomVolume();
+
+        int freq = 125;
+
+        double doorHeight = door1.getDoorHeight();
+        double doorWidth = door1.getDoorWidth();
+        double doorArea = doorHeight * doorWidth;
+
+        LinkedList<Double> doorCoefficients = door1.getDoorMatRt60();
+
+        //TODO: null pointer exception
+        for (double x : doorCoefficients) {
+            double coefficient = x;
+            double absorption = doorArea * coefficient;
+            double rt60 = (0.05 * volume) / absorption;
+
+            System.out.println("Reverb time for " + freq + "Hz is: " + rt60 + " seconds.");
+            doorRT60.add(rt60);
+            freq = freq * 2;
+        }
+        System.out.println("Door RT60 values at frequencies 125, 250, 500, 1k, 2, and 4k: ");
+        for (double x : doorRT60) {
+            System.out.println(x + ", ");
+        }
+
+    }
+
+    //window absorption calculator
+    public static void windowAbsorption(Room room1, Window window1, LinkedList<Double> windowRT60) {
+
+
+        double volume = room1.getRoomVolume();
+
+        int freq = 125;
+
+        double windowHeight = window1.getWindowHeight();
+        double windowWidth = window1.getWindowWidth();
+        double windowArea = windowHeight * windowWidth;
+
+        LinkedList<Double> windowCoefficients = window1.getWindowRt60();
+
+        //TODO: null pointer exception
+        for (double x : windowCoefficients) {
+            double coefficient = x;
+            double absorption = windowArea * coefficient;
+            double rt60 = (0.05 * volume) / absorption;
+
+            System.out.println("Reverb time for " + freq + "Hz is: " + rt60 + " seconds.");
+            windowRT60.add(rt60);
+            freq = freq * 2;
+        }
+        System.out.println("Window RT60 values at frequencies 125, 250, 500, 1k, 2, and 4k: ");
+        for (double x : windowRT60) {
+            System.out.println(x + ", ");
+        }
+
+    }
+
+    //total absorption calculator
+    public static void totalAbsorption(Room room1,
+                                       LinkedList<Double> floorRT60,
+                                       LinkedList<Double> ceilingRT60,
+                                       LinkedList<Double> wallRT60,
+                                       LinkedList<Double> doorRT60,
+                                       LinkedList<Double> windowRT60) {
+
+        double reverb125 = 0;
+        double reverb250 = 0;
+        double reverb500 = 0;
+        double reverb1k = 0;
+        double reverb2k = 0;
+        double reverb4k = 0;
+
     }
 }

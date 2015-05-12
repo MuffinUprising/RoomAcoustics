@@ -8,6 +8,7 @@ import java.util.DoubleSummaryStatistics;
 /**
  * Created by casey on 4/21/15.
  */
+//Room class - stores all the data gathered and calculated for a room
 public class Room {
 
     Window window1;
@@ -145,7 +146,7 @@ public class Room {
     public LinkedList<Double> getFloorMaterialCoefficients() { return floorMaterialCoefficients; }
     public void setFloorMaterialCoefficients(LinkedList<Double> floorMaterialCoefficients) { this.floorMaterialCoefficients = floorMaterialCoefficients; }
 
-    //door material coefficients
+    //wall material coefficients
     public LinkedList<Double> getWallMaterialCoefficients() { return wallMaterialCoefficients; }
     public void setWallMaterialCoefficients(LinkedList<Double> wallMaterialCoefficients) { this.wallMaterialCoefficients = wallMaterialCoefficients; }
 
@@ -161,25 +162,15 @@ public class Room {
 //    public LinkedList<Double> getWindowMaterialCoefficients() { return windowMaterialCoefficients; }
 //    public void setWindowMaterialCoefficients(LinkedList<Double> windowMaterialCoefficients) { this.windowMaterialCoefficients = windowMaterialCoefficients; }
 
-    public static void lengthModesFromCalc (Calculator calc){
-
-    }
-
-    public static void widthModesFromCalc (){
-
-    }
-
-    public static void heightModesFromCalc (){
-
-    }
 
     @Override
     public String toString(){
+
         return "Room height: " + roomHeight +
                 " Room width: " + roomWidth +
                 " Room length: " + roomLength +
                 " Floor material: " + floorMaterial +
-                " Wall material " + wallMaterial +
-                " Ceiling material " + ceilingMaterial;
+                " Wall material: " + wallMaterial +
+                " Ceiling material: " + ceilingMaterial;
     }
 }

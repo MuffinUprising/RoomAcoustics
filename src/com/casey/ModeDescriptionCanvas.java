@@ -6,6 +6,9 @@ import java.awt.*;
 /**
  * Created by casey on 5/4/15.
  */
+    //Mode Description Canvas was meant to change states when the user hovered over the other canvases
+    //and give the user more information about each canvas
+    //For now though it just gives instruction for the modes canvas.
 public class ModeDescriptionCanvas extends Canvas{
 
     public ModeDescriptionCanvas(){

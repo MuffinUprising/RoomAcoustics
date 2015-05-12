@@ -6,6 +6,7 @@ import java.util.LinkedList;
 /**
  * Created by casey on 4/21/15.
  */
+//Stores data about a door
 public class Door {
 
     //door dimensions

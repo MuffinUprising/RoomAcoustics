@@ -1,6 +1,7 @@
 package com.casey;
 
 import com.sun.javafx.sg.prism.NGShape;
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +10,7 @@ import java.awt.event.*;
 /**
  * Created by casey on 5/3/15.
  */
+//Right-side calculation panel - where results are intended to be displayed
 public class CalcPanel extends JPanel {
     ModeCanvas modeCanvas = new ModeCanvas();
     ModeDescriptionCanvas modeDescriptionCanvas = new ModeDescriptionCanvas();
@@ -18,7 +20,6 @@ public class CalcPanel extends JPanel {
     private JLabel rt60Label;
 
     Room room1;
-    Calculator calc;
 
 
     public CalcPanel(){
@@ -33,6 +34,7 @@ public class CalcPanel extends JPanel {
 
         roomModes = new JLabel("Room Modes");
         rt60Label = new JLabel("RT60 results");
+
 
         //Jbutton to calculate modes
         JButton calcModeButton = new JButton("Calculate Modes");
@@ -55,6 +57,19 @@ public class CalcPanel extends JPanel {
         c.gridx =0;
         c.gridy = 2;
         add(modeCanvas, c);
+
+        //calculate modes button
+        c.gridx = 0;
+        c.gridy = 3;
+        add(calcModeButton, c);
+        calcModeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                modeCanvas.drawHeightModes(room1);
+                modeCanvas.drawLengthModes(room1);
+                modeCanvas.drawWidthModes(room1);
+            }
+        });
 
         //RT60 label
         c.gridx = 0;

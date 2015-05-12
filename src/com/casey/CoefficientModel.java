@@ -273,16 +273,22 @@ public class CoefficientModel {
                     while (rs.next()){
                         double coefficient125 = rs.getDouble("onetwofiveHz");
                         wallMaterialCoefficients.add(coefficient125);
+                        System.out.println(coefficient125);
                         double coefficient250 = rs.getDouble("twofivezeroHz");
                         wallMaterialCoefficients.add(coefficient250);
+                        System.out.println(coefficient250);
                         double coefficient500 = rs.getDouble("fivehundredHz");
                         wallMaterialCoefficients.add(coefficient500);
+                        System.out.println(coefficient500);
                         double coefficient1k = rs.getDouble("onekHz");
                         wallMaterialCoefficients.add(coefficient1k);
+                        System.out.println(coefficient1k);
                         double coefficient2k = rs.getDouble("twokHz");
                         wallMaterialCoefficients.add(coefficient2k);
+                        System.out.println(coefficient2k);
                         double coefficient4k = rs.getDouble("fourkHz");
                         wallMaterialCoefficients.add(coefficient4k);
+                        System.out.println(coefficient4k);
                     }
                     closeIt(conn);
                     closeIt(psQuery);
@@ -328,16 +334,22 @@ public class CoefficientModel {
                 while (rs.next()){
                     double coefficient125 = rs.getDouble("onetwofiveHz");
                     floorMaterialCoefficients.add(coefficient125);
+                    System.out.println(coefficient125);
                     double coefficient250 = rs.getDouble("twofivezeroHz");
                     floorMaterialCoefficients.add(coefficient250);
+                    System.out.println(coefficient250);
                     double coefficient500 = rs.getDouble("fivehundredHz");
                     floorMaterialCoefficients.add(coefficient500);
+                    System.out.println(coefficient500);
                     double coefficient1k = rs.getDouble("onekHz");
                     floorMaterialCoefficients.add(coefficient1k);
+                    System.out.println(coefficient1k);
                     double coefficient2k = rs.getDouble("twokHz");
                     floorMaterialCoefficients.add(coefficient2k);
+                    System.out.println(coefficient2k);
                     double coefficient4k = rs.getDouble("fourkHz");
                     floorMaterialCoefficients.add(coefficient4k);
+                    System.out.println(coefficient4k);
                 }
 
                 closeIt(conn);
@@ -379,16 +391,22 @@ public class CoefficientModel {
                     String ceofficient = rs.getString("material");
                     double coefficient125 = rs.getDouble("onetwofiveHz");
                     ceilingMaterialCoefficients.add(coefficient125);
+                    System.out.println(coefficient125);
                     double coefficient250 = rs.getDouble("twofivezeroHz");
                     ceilingMaterialCoefficients.add(coefficient250);
+                    System.out.println(coefficient250);
                     double coefficient500 = rs.getDouble("fivehundredHz");
                     ceilingMaterialCoefficients.add(coefficient500);
+                    System.out.println(coefficient500);
                     double coefficient1k = rs.getDouble("onekHz");
                     ceilingMaterialCoefficients.add(coefficient1k);
+                    System.out.println(coefficient1k);
                     double coefficient2k = rs.getDouble("twokHz");
                     ceilingMaterialCoefficients.add(coefficient2k);
+                    System.out.println(coefficient2k);
                     double coefficient4k = rs.getDouble("fourkHz");
                     ceilingMaterialCoefficients.add(coefficient4k);
+                    System.out.println(coefficient4k);
                 }
 
                 closeIt(conn);
@@ -429,16 +447,22 @@ public class CoefficientModel {
                 while (rs.next()) {
                     double coefficient125 = rs.getDouble("onetwofiveHz");
                     doorMaterialCoefficients.add(coefficient125);
+                    System.out.println(coefficient125);
                     double coefficient250 = rs.getDouble("twofivezeroHz");
                     doorMaterialCoefficients.add(coefficient250);
+                    System.out.println(coefficient250);
                     double coefficient500 = rs.getDouble("fivehundredHz");
                     doorMaterialCoefficients.add(coefficient500);
+                    System.out.println(coefficient500);
                     double coefficient1k = rs.getDouble("onekHz");
                     doorMaterialCoefficients.add(coefficient1k);
+                    System.out.println(coefficient1k);
                     double coefficient2k = rs.getDouble("twokHz");
                     doorMaterialCoefficients.add(coefficient2k);
+                    System.out.println(coefficient2k);
                     double coefficient4k = rs.getDouble("fourkHz");
                     doorMaterialCoefficients.add(coefficient4k);
+                    System.out.println(coefficient4k);
                 }
 
                 closeIt(conn);

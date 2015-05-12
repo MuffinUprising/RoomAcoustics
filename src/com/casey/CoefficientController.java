@@ -2,11 +2,15 @@ package com.casey;
 
 import javax.swing.*;
 import java.sql.SQLException;
+import java.util.LinkedList;
 
 
 public class CoefficientController {
 
     CoefficientModel coefficientModel = new CoefficientModel();
+    Room room1;
+    Door door1;
+    Window window1;
 
 
 
@@ -20,19 +24,15 @@ public class CoefficientController {
     }
 
 
-    public void wallMaterial(String wallMaterial){
-        coefficientModel.wallMaterialCoefficients(wallMaterial);
+    public void wallMaterial(){ coefficientModel.wallMaterialCoefficients(room1.wallMaterial); }
+
+    public void floorMaterial(){
+        coefficientModel.floorMaterialCoefficients(room1.floorMaterial);
     }
 
-    public void floorMaterial(String floorMaterial){
-        coefficientModel.floorMaterialCoefficients(floorMaterial);
-    }
+    public void ceilingMaterial(){ coefficientModel.ceilingMaterialCoefficients(room1.ceilingMaterial); }
 
-    public void ceilingMaterial(String ceilingMaterial){ coefficientModel.ceilingMaterialCoefficients(ceilingMaterial); }
-
-    public void doorMaterial(String doorMaterial){
-        coefficientModel.doorMaterialCoefficients(doorMaterial);
-    }
+    public void doorMaterial(){ coefficientModel.doorMaterialCoefficients(door1.doorMaterial); }
 
     public void connect(){
         try{

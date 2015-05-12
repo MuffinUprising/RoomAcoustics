@@ -9,9 +9,10 @@ import java.util.LinkedList;
 /**
  * Created by casey on 5/3/15.
  */
+//Mode Canvas is a graph meant to display the modes on a frequency spectrum so they can be visually compared
 public class ModeCanvas extends Canvas {
 
-    Room room1;
+//    Room room1 = UserInputPanel.getRoom1();
 
     //TODO: This produces null pointer exceptions. This needs fixing
     LinkedList<Integer> lengthModesInt = new LinkedList<Integer>();
@@ -28,6 +29,7 @@ public class ModeCanvas extends Canvas {
         setPreferredSize(new Dimension(360, 300));
         setVisible(true);
         setBackground(Color.GRAY);
+
     }
 
 
@@ -127,8 +129,8 @@ public class ModeCanvas extends Canvas {
 
     //extract modes from Room and add to local LinkedList
     //length
-    //TODO: All of these methods cause null pointer exceptions
-    public LinkedList<Integer> drawLengthModes(){
+    //TODO: All of these methods cause null pointer exceptions - never did get it working
+    public LinkedList<Integer> drawLengthModes(Room room1){
         LinkedList<Integer> lengthModes = room1.getLengthModes();
 
         for(int x : lengthModes){
@@ -139,7 +141,7 @@ public class ModeCanvas extends Canvas {
         return lengthModesInt;
     }
     //width
-    public LinkedList<Integer> drawWidthModes() {
+    public LinkedList<Integer> drawWidthModes(Room room1) {
         LinkedList<Integer> widthModes = room1.getWidthModes();
 
         for (int x : widthModes) {
@@ -149,7 +151,7 @@ public class ModeCanvas extends Canvas {
         return widthModesInt;
     }
     //height
-    public LinkedList<Integer> drawHeightModes() {
+    public LinkedList<Integer> drawHeightModes(Room room1) {
         LinkedList<Integer> heightModes = room1.getHeightModes();
 
         for (int x : heightModes) {

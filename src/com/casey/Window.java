@@ -5,9 +5,10 @@ import java.util.Arrays;
 /**
  * Created by casey on 4/21/15.
  */
+    //Stores data about a window
+    //Interesting to note that a window's material value is static (because windows are made of glass)
+    //so this contains a method to build a LinkedList of glass coefficients manually instead of from the database
 public class Window {
-
-    Room room1;
 
     //window and door dimensions
     protected double windowWidth;

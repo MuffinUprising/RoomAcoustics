@@ -13,13 +13,14 @@ import java.util.prefs.*;
 /**
  * Created by casey on 4/28/15.
  */
+//Main frame for GUI
 public class MainFrame extends JFrame{
 
     public UserInputPanel userInput;
     public CalcPanel calcPanel;
     public JSplitPane splitPane;
     public JFrame f;
-
+    ModeCanvas modeCanvas;
 
 
     public MainFrame(){

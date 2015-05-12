@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.InputMismatchException;
 import java.util.LinkedList;
 
 /**
@@ -16,7 +17,7 @@ public class UserInputPanel extends JPanel{
     Window window1 = new Window(0,0);
     Room room1 = new Room(0,0,0,0,null,null,null,null,null,null,null,null,null);
     Calculator calc = new Calculator();
-    ModeCanvas modeCanvas;
+    ErrorPanel errorPanel = new ErrorPanel();
 
 
     private JLabel roomDimensionsLabel;
@@ -42,7 +43,7 @@ public class UserInputPanel extends JPanel{
     private JComboBox ceilingMaterialComboBox;
     private JLabel doorMaterialLabel;
     private JComboBox doorMaterialComboBox;
-    private JButton calcModeButton;
+    private JButton calcVolumeButton;
     private JButton calcReverbButton;
     private JButton printModes;
     private JButton buildDatabase;
@@ -154,8 +155,8 @@ public class UserInputPanel extends JPanel{
         doorMaterialComboBox = new JComboBox(doorMaterials);
 
         //calculation buttons
-        calcModeButton = new JButton("Calculate Modes");
-        calcReverbButton = new JButton("Calculate reverb time");
+        calcVolumeButton = new JButton("Calculate Room Volume");
+        calcReverbButton = new JButton("Calculate Reverb Time");
 
         //grid bag constraints variable
         GridBagConstraints c = new GridBagConstraints();
@@ -189,11 +190,17 @@ public class UserInputPanel extends JPanel{
         heightTextField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Double height = new Double(heightTextField.getText());
-                room1.setRoomHeight(height);
-                System.out.println("height added to Room");
-                calc.heightModeCalc(room1);
 
+                try{
+                    Double height = new Double(heightTextField.getText());
+                    room1.setRoomHeight(height);
+                    System.out.println("height added to Room");
+                    calc.heightModeCalc(room1);
+
+                }catch (NumberFormatException nfe) {
+                    nfe.printStackTrace();
+                    errorPanel.setVisible(true);
+                }
             }
         });
 
@@ -207,10 +214,17 @@ public class UserInputPanel extends JPanel{
         widthTextField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Double width = new Double(widthTextField.getText());
-                room1.setRoomWidth(width);
-                System.out.println("width added to Room");
-                calc.widthModeCalc(room1);
+
+                try{
+                    Double width = new Double(widthTextField.getText());
+                    room1.setRoomWidth(width);
+                    System.out.println("width added to Room");
+                    calc.widthModeCalc(room1);
+
+                }catch (NumberFormatException nfe) {
+                    nfe.printStackTrace();
+                    errorPanel.setVisible(true);
+                }
             }
         });
 
@@ -224,26 +238,29 @@ public class UserInputPanel extends JPanel{
         lengthTextField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Double length = new Double(lengthTextField.getText());
-                room1.setRoomLength(length);
-                System.out.println("length added to Room");
-                calc.lengthModeCalc(room1);
 
+                try{
+                    Double length = new Double(lengthTextField.getText());
+                    room1.setRoomLength(length);
+                    System.out.println("length added to Room");
+                    calc.lengthModeCalc(room1);
+
+                }catch(NumberFormatException nfe) {
+                    nfe.printStackTrace();
+                    errorPanel.setVisible(true);
+                }
             }
         });
 
-        //calculate modes button
+        //calculate reverb button
         c.gridx = 0;
         c.gridy = 8;
-        add(calcModeButton, c);
-        calcModeButton.addActionListener(new ActionListener() {
+        add(calcVolumeButton, c);
+        calcVolumeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 calc.roomVolumeCalc(room1);
-//                modeCanvas.drawLengthModes();
-//                modeCanvas.drawWidthModes();
-//                modeCanvas.drawHeightModes();
-//                modeCanvas.repaint();
+
             }
         });
 
@@ -255,11 +272,19 @@ public class UserInputPanel extends JPanel{
         c.gridy = 10;
         add(windowHeightTextField, c);
         windowHeightTextField.addActionListener(new ActionListener() {
+            //TODO add input validation
             @Override
             public void actionPerformed(ActionEvent e) {
-                Double windowHeight = new Double(windowHeightTextField.getText());
-                window1.setWindowHeight(windowHeight);
-                System.out.println("height added to Window");
+                try{
+                    Double windowHeight = new Double(windowHeightTextField.getText());
+                    window1.setWindowHeight(windowHeight);
+                    System.out.println("height added to Window");
+
+                }catch(NumberFormatException nfe) {
+                    nfe.printStackTrace();
+                    errorPanel.setVisible(true);
+                }
+
             }
         });
 
@@ -271,11 +296,19 @@ public class UserInputPanel extends JPanel{
         c.gridy = 12;
         add(windowWidthTextField, c);
         windowWidthTextField.addActionListener(new ActionListener() {
+            //TODO add input validation
             @Override
             public void actionPerformed(ActionEvent e) {
-                Double windowWidth = new Double(windowWidthTextField.getText());
-                window1.setWindowWidth(windowWidth);
-                System.out.println("width added to Window");
+                try{
+                    Double windowWidth = new Double(windowWidthTextField.getText());
+                    window1.setWindowWidth(windowWidth);
+                    System.out.println("width added to Window");
+
+                }catch(NumberFormatException nfe) {
+                    nfe.printStackTrace();
+                    errorPanel.setVisible(true);
+                }
+
             }
         });
 
@@ -287,11 +320,19 @@ public class UserInputPanel extends JPanel{
         c.gridy = 14;
         add(doorHeightTextField, c);
         doorHeightTextField.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
-                Double doorHeight = new Double(doorHeightTextField.getText());
-                door1.setDoorHeight(doorHeight);
-                System.out.println("height added to Door");
+                try{
+                    Double doorHeight = new Double(doorHeightTextField.getText());
+                    door1.setDoorHeight(doorHeight);
+                    System.out.println("height added to Door");
+
+                }catch(NumberFormatException nfe) {
+                    nfe.printStackTrace();
+                    errorPanel.setVisible(true);
+                }
+
             }
         });
 
@@ -303,11 +344,19 @@ public class UserInputPanel extends JPanel{
         c.gridy = 16;
         add(doorWidthTextField, c);
         doorWidthTextField.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
-                Double doorWidth = new Double(doorWidthTextField.getText());
-                door1.setDoorWidth(doorWidth);
-                System.out.println("width added to Door");
+                try{
+                    Double doorWidth = new Double(doorWidthTextField.getText());
+                    door1.setDoorWidth(doorWidth);
+                    System.out.println("width added to Door");
+
+                }catch(NumberFormatException nfe) {
+                    nfe.printStackTrace();
+                    errorPanel.setVisible(true);
+                }
+
             }
         });
 
@@ -321,10 +370,11 @@ public class UserInputPanel extends JPanel{
         wallMaterialComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String wallMaterial = wallMaterialComboBox.toString();
+                String wallMaterial = (String)wallMaterialComboBox.getSelectedItem();
                 room1.setWallMaterial(wallMaterial);
                 System.out.println("wall material added to Room");
-                myController.wallMaterial(wallMaterial);
+                //TODO: fix null pointer exception
+                myController.wallMaterial();
             }
         });
 
@@ -338,10 +388,11 @@ public class UserInputPanel extends JPanel{
         floorMaterialComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String floorMaterial = floorMaterialComboBox.toString();
+                String floorMaterial = (String)floorMaterialComboBox.getSelectedItem();
                 room1.setFloorMaterial(floorMaterial);
                 System.out.println("floor material added to Room");
-                myController.floorMaterial(floorMaterial);
+                //TODO: fix null pointer exception
+                myController.floorMaterial();
             }
         });
 
@@ -355,10 +406,11 @@ public class UserInputPanel extends JPanel{
         ceilingMaterialComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String ceilingMaterial = ceilingMaterialComboBox.toString();
+                String ceilingMaterial = (String)ceilingMaterialComboBox.getSelectedItem();
                 room1.setCeilingMaterial(ceilingMaterial);
                 System.out.println("ceiling material added to Room");
-                myController.ceilingMaterial(ceilingMaterial);
+                //TODO: fix null pointer exception
+                myController.ceilingMaterial();
             }
         });
 
@@ -372,10 +424,11 @@ public class UserInputPanel extends JPanel{
         doorMaterialComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String doorMaterial = doorMaterialComboBox.toString();
+                String doorMaterial = (String)doorMaterialComboBox.getSelectedItem();
                 door1.setDoorMaterial(doorMaterial);
                 System.out.println("material added to Door");
-                myController.doorMaterial(doorMaterial);
+                //TODO: fix null pointer exception
+                myController.doorMaterial();
             }
         });
 
@@ -386,11 +439,15 @@ public class UserInputPanel extends JPanel{
         calcReverbButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println(room1.toString());
+                //TODO: fix null pointer exceptions
                 calc.wallAbsorption(room1);
                 calc.floorAbsorption(room1);
                 calc.ceilingAbsorption(room1);
-                calc.doorAbsorption(room1, door1);
-                calc.windowAbsorption(room1, window1);
+//                calc.doorAbsorption(room1, door1);
+//                calc.windowAbsorption(room1, window1);
+                calc.totalAbsorption(room1);
+
             }
         });
 
@@ -401,7 +458,7 @@ public class UserInputPanel extends JPanel{
         printModes.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO: Oddly enough, these do not cause null pointer exceptions - most likely has something to do with Room being instantiated here.
+
                 LinkedList<Integer> heightModes = room1.getHeightModes();
                 LinkedList<Integer> widthModes = room1.getWidthModes();
                 LinkedList<Integer> lengthModes = room1.getLengthModes();
@@ -421,6 +478,13 @@ public class UserInputPanel extends JPanel{
             }
         });
     }
+
+    //attempt to retrieve data from Room and others
+    public Door getDoor1() { return this.door1; }
+
+    public Window getWindow1() { return this.window1; }
+
+    public Room getRoom1() { return this.room1; }
 
     public void paintComponent(Graphics g) {
 

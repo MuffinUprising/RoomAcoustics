@@ -19,19 +19,11 @@ public class ModeCanvas extends Canvas {
     LinkedList<Integer> widthModesInt = new LinkedList<Integer>();
     LinkedList<Integer> heightModesInt = new LinkedList<Integer>();
 
-    //replacement linkedlists until i can reference the room linkedlists
-
-
-
-
-
     public ModeCanvas(){
         setPreferredSize(new Dimension(360, 300));
         setVisible(true);
         setBackground(Color.GRAY);
-
     }
-
 
     public void paint(Graphics g){
         //border
@@ -136,7 +128,6 @@ public class ModeCanvas extends Canvas {
         for(int x : lengthModes){
             System.out.println(x + ", ");
             lengthModesInt.add(x);
-
         }
         return lengthModesInt;
     }

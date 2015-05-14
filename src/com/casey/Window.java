@@ -23,7 +23,6 @@ public class Window {
     public Window (double windowWidth, double windowHeight) {
         this.windowWidth = windowWidth;
         this.windowHeight =windowHeight;
-
     }
 
     //getters and setters for window variables
@@ -57,8 +56,6 @@ public class Window {
 
 //        room1.setWindowMaterialCoefficients(windowRT60);
         return windowRT60;
-
-
     }
 
     @Override

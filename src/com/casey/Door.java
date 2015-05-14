@@ -23,7 +23,6 @@ public class Door {
         this.doorWidth = doorWidth;
         this.doorHeight = doorHeight;
         this.doorMaterial = doorMaterial;
-
     }
 
     //getters and setters for door variables

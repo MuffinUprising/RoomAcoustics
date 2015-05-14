@@ -50,11 +50,9 @@ public class ErrorPanel extends JPopupMenu{
                 setVisible(false);
             }
         });
-
     }
 
     public void paintComponent(Graphics g) {
-
         super.paintComponent(g);
 
     }

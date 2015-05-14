@@ -17,8 +17,9 @@ public class CoefficientModel {
     // Variables to create a connection to the DB
     private static String driver = "org.apache.derby.jdbc.EmbeddedDriver";
     private static String protocol = "jdbc:derby:";
-    private static String dbName = "coefficientDB";
+    private static String dbName = "CDB";
 
+    private static String tablename = "coefficientDB";
 
     //  Database credentials
     private static final String USER = "temp";
@@ -26,7 +27,7 @@ public class CoefficientModel {
 
 
     public CoefficientModel() {
-
+        setupDatabase();
     }
 
 
@@ -78,23 +79,14 @@ public class CoefficientModel {
         try {
             Connection conn = DriverManager.getConnection(protocol + dbName + "/Users/casey/IdeaProjects/RoomAcoustics/coefficientDB/;create=true");
             statement = conn.createStatement();
-        }catch (SQLException e) {
+            String createCoefficientTableSQL = "CREATE TABLE coefficientDB (material varchar(90), onetwofiveHz double, twofivezeroHz double, fivehundredHz double, onekHz double, twokHz double, fourkHz double)";
+            statement.executeUpdate(createCoefficientTableSQL);
+            System.out.println("Created coefficients table");
+
+        } catch (SQLException e) {
+            System.out.println("The table already exists so this is fine!");
             e.printStackTrace();
         }
-            String createCoefficientTableSQL = "CREATE TABLE coefficientDB (material varchar(90), onetwofiveHz double, twofivezeroHz double, fivehundredHz double, onekHz double, twokHz double, fourkHz double)";
-        if (statement != null) {
-            try {
-                statement.executeUpdate(createCoefficientTableSQL);
-            } catch (SQLException sqle) {
-            //Seems the table already exists, or some other error has occurred.
-            //Let's try to check if the DB exists already by checking the error code returned. If so, delete it and re-create it
-
-            throw sqle;
-        }
-        }
-            statement.executeUpdate(createCoefficientTableSQL);
-            System.out.println("Created coefficient table");
-
     }
 
     public void createConnection() throws Exception {
@@ -109,11 +101,9 @@ public class CoefficientModel {
             conn.createStatement();
             System.out.println("Connection created");
         } catch (Exception e) {
-            //There are a lot of things that could go wrong here. Should probably handle them all separately but have not done so here.
-            //Should put something more helpful here...
+            e.printStackTrace();
             throw e;
         }
-
     }
 
     private void addTestData() throws Exception {
@@ -311,9 +301,7 @@ public class CoefficientModel {
             e.printStackTrace();
         }
 
-
         return wallMaterialCoefficients;
-
     }
 
     //floor material coefficient LinkedList
@@ -368,7 +356,6 @@ public class CoefficientModel {
             System.out.println("Null pointer exception:");
             e.printStackTrace();
         }
-
 
         return floorMaterialCoefficients;
     }
@@ -426,7 +413,6 @@ public class CoefficientModel {
             System.out.println("Error in search operation");
         }
 
-
         return ceilingMaterialCoefficients;
     }
 
@@ -482,7 +468,6 @@ public class CoefficientModel {
             System.out.println("Error in search operation");
         }
 
-
         return doorMaterialCoefficients;
     }
 
@@ -526,10 +511,7 @@ public class CoefficientModel {
 
         }catch(SQLException e){
             e.printStackTrace();
-
         }
-
-
     }
 
 //    //cleanup method

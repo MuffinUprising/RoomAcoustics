@@ -20,7 +20,6 @@ public class MainFrame extends JFrame{
     public CalcPanel calcPanel;
     public JSplitPane splitPane;
     public JFrame f;
-    ModeCanvas modeCanvas;
 
 
     public MainFrame(){
@@ -38,6 +37,7 @@ public class MainFrame extends JFrame{
         splitPane.add(calcPanel);
         splitPane.setOneTouchExpandable(true);
 
+
         //frame building
         f = new JFrame("Reverb Measurement");
         f.setPreferredSize(new Dimension(1200, 760));
@@ -49,6 +49,5 @@ public class MainFrame extends JFrame{
         f.pack();
         f.setVisible(true);
         f.setLocationRelativeTo(null);
-
     }
 }

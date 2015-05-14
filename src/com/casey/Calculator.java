@@ -40,7 +40,6 @@ public class Calculator {
     //height mode calculator
     public static void heightModeCalc (final Room room1) {
 
-
         LinkedList<Integer> heightModes = new LinkedList<Integer>();
 
         //get dimensions from Room and determine fundamental
@@ -186,9 +185,8 @@ public class Calculator {
 
         //TODO: null pointer exception
         for (double x : wallCoefficients) {
-            double coefficient = x;
 
-            double absorption = totalWallArea * coefficient;
+            double absorption = totalWallArea * x;
             double rt60 = (0.05 * volume) / absorption;
 
             System.out.println("Reverb time for " + freq + "Hz is: " + rt60 + " seconds.");
@@ -219,8 +217,7 @@ public class Calculator {
 
         //TODO: null pointer exception
         for (double x : ceilingCoefficients) {
-            double coefficient = x;
-            double absorption = ceilingArea * coefficient;
+            double absorption = ceilingArea * x;
             double rt60 = (0.05 * volume) / absorption;
 
             System.out.println("Reverb time for " + freq + "Hz is: " + rt60 + " seconds.");
@@ -250,8 +247,7 @@ public class Calculator {
 
         //TODO: null pointer exception
         for (double x : floorCoefficients) {
-            double coefficient = x;
-            double absorption = floorArea * coefficient;
+            double absorption = floorArea * x;
             double rt60 = (0.05 * volume) / absorption;
 
             System.out.println("Reverb time for " + freq + "Hz is: " + rt60 + " seconds.");
@@ -280,8 +276,7 @@ public class Calculator {
 
         //TODO: null pointer exception
         for (double x : doorCoefficients) {
-            double coefficient = x;
-            double absorption = doorArea * coefficient;
+            double absorption = doorArea * x;
             double rt60 = (0.05 * volume) / absorption;
 
             System.out.println("Reverb time for " + freq + "Hz is: " + rt60 + " seconds.");
@@ -298,7 +293,6 @@ public class Calculator {
     //window absorption calculator
     public LinkedList<Double> windowAbsorption(Room room1, Window window1) {
 
-
         double volume = room1.getRoomVolume();
 
         int freq = 125;
@@ -311,8 +305,7 @@ public class Calculator {
 
         //TODO: null pointer exception
         for (double x : windowCoefficients) {
-            double coefficient = x;
-            double absorption = windowArea * coefficient;
+            double absorption = windowArea * x;
             double rt60 = (0.05 * volume) / absorption;
 
             System.out.println("Reverb time for " + freq + "Hz is: " + rt60 + " seconds.");

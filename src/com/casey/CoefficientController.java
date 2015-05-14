@@ -10,9 +10,12 @@ public class CoefficientController {
     CoefficientModel coefficientModel = new CoefficientModel();
     Room room1;
     Door door1;
-    Window window1;
 
 
+    public CoefficientController(Room room1){
+
+        this.room1 = room1;
+    }
 
     public void printAll(){
 
@@ -24,15 +27,21 @@ public class CoefficientController {
     }
 
 
-    public void wallMaterial(){ coefficientModel.wallMaterialCoefficients(room1.wallMaterial); }
+    public void wallMaterial(){
+        coefficientModel.wallMaterialCoefficients(room1.wallMaterial);
+        System.out.println(room1.wallMaterial);}
 
     public void floorMaterial(){
         coefficientModel.floorMaterialCoefficients(room1.floorMaterial);
+        System.out.println(room1.floorMaterial);
     }
 
-    public void ceilingMaterial(){ coefficientModel.ceilingMaterialCoefficients(room1.ceilingMaterial); }
+    public void ceilingMaterial(){
+        coefficientModel.ceilingMaterialCoefficients(room1.ceilingMaterial);
+        System.out.println(room1.ceilingMaterial);}
 
-    public void doorMaterial(){ coefficientModel.doorMaterialCoefficients(door1.doorMaterial); }
+    public void doorMaterial(){ coefficientModel.doorMaterialCoefficients(door1.doorMaterial);
+        System.out.println(door1.doorMaterial);}
 
     public void connect(){
         try{

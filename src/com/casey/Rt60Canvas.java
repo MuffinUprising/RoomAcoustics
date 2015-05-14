@@ -17,7 +17,6 @@ public class Rt60Canvas extends Canvas{
         setPreferredSize(new Dimension(600, 200));
         setVisible(true);
         setBackground(Color.GRAY);
-
     }
 
     public void paint(Graphics g){

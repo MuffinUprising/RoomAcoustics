@@ -35,7 +35,6 @@ public class CalcPanel extends JPanel {
         roomModes = new JLabel("Room Modes");
         rt60Label = new JLabel("RT60 results");
 
-
         //Jbutton to calculate modes
         JButton calcModeButton = new JButton("Calculate Modes");
 
@@ -46,7 +45,6 @@ public class CalcPanel extends JPanel {
 
         //anchor at line start
         c.anchor = GridBagConstraints.CENTER;
-
 
         //title
         c.gridx =0;
@@ -87,6 +85,21 @@ public class CalcPanel extends JPanel {
         add(modeDescriptionCanvas, c);
     }
 
+    public ModeCanvas getModeCanvas() {
+        return modeCanvas;
+    }
+
+    public void setModeCanvas(ModeCanvas modeCanvas) {
+        this.modeCanvas = modeCanvas;
+    }
+
+    public Rt60Canvas getRt60Canvas() {
+        return rt60Canvas;
+    }
+
+    public void setRt60Canvas(Rt60Canvas rt60Canvas) {
+        this.rt60Canvas = rt60Canvas;
+    }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);

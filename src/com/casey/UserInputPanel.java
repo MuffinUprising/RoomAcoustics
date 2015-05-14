@@ -12,12 +12,14 @@ import java.util.LinkedList;
  */
 public class UserInputPanel extends JPanel{
 
-    CoefficientController myController = new CoefficientController();
-    Door door1 = new Door(0,0,null);
+    Door door1;
     Window window1 = new Window(0,0);
     Room room1 = new Room(0,0,0,0,null,null,null,null,null,null,null,null,null);
+
     Calculator calc = new Calculator();
     ErrorPanel errorPanel = new ErrorPanel();
+
+    CoefficientController myController = new CoefficientController(room1);
 
 
     private JLabel roomDimensionsLabel;
@@ -48,7 +50,12 @@ public class UserInputPanel extends JPanel{
     private JButton printModes;
     private JButton buildDatabase;
 
-    public UserInputPanel() {
+    public UserInputPanel(Door door1, Room room1, Window window1) {
+
+        this.door1 = door1;
+        this.window1 = window1;
+        this.room1 = room1;
+
         //dimension variable
         Dimension dim = getPreferredSize();
         dim.width = 250;
@@ -187,22 +194,12 @@ public class UserInputPanel extends JPanel{
         c.gridx = 0;
         c.gridy = 3;
         add(heightTextField, c);
-        heightTextField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                try{
-                    Double height = new Double(heightTextField.getText());
-                    room1.setRoomHeight(height);
-                    System.out.println("height added to Room");
-                    calc.heightModeCalc(room1);
-
-                }catch (NumberFormatException nfe) {
-                    nfe.printStackTrace();
-                    errorPanel.setVisible(true);
-                }
-            }
-        });
+//        heightTextField.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//            }
+//        });
 
         //room width label and text field
         c.gridx = 0;
@@ -211,22 +208,13 @@ public class UserInputPanel extends JPanel{
         c.gridx = 0;
         c.gridy = 5;
         add(widthTextField, c);
-        widthTextField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                try{
-                    Double width = new Double(widthTextField.getText());
-                    room1.setRoomWidth(width);
-                    System.out.println("width added to Room");
-                    calc.widthModeCalc(room1);
-
-                }catch (NumberFormatException nfe) {
-                    nfe.printStackTrace();
-                    errorPanel.setVisible(true);
-                }
-            }
-        });
+//        widthTextField.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//
+//            }
+//        });
 
         //room depth label and text field
         c.gridx = 0;
@@ -235,22 +223,12 @@ public class UserInputPanel extends JPanel{
         c.gridx = 0;
         c.gridy = 7;
         add(lengthTextField, c);
-        lengthTextField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                try{
-                    Double length = new Double(lengthTextField.getText());
-                    room1.setRoomLength(length);
-                    System.out.println("length added to Room");
-                    calc.lengthModeCalc(room1);
-
-                }catch(NumberFormatException nfe) {
-                    nfe.printStackTrace();
-                    errorPanel.setVisible(true);
-                }
-            }
-        });
+//        lengthTextField.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//            }
+//        });
 
         //calculate reverb button
         c.gridx = 0;
@@ -259,8 +237,25 @@ public class UserInputPanel extends JPanel{
         calcVolumeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                calc.roomVolumeCalc(room1);
 
+                try{
+                    room1.setRoomHeight(new Float(heightTextField.getText()));
+                    System.out.println("height added to Room");
+                    room1.setRoomLength(new Float(lengthTextField.getText()));
+                    System.out.println("length added to Room");
+                    room1.setRoomWidth(new Float(widthTextField.getText()));
+                    System.out.println("width added to Room");
+
+                    calc.lengthModeCalc(room1);
+                    calc.heightModeCalc(room1);
+                    calc.widthModeCalc(room1);
+
+                    calc.roomVolumeCalc(room1);
+
+                }catch(NumberFormatException nfe) {
+                    nfe.printStackTrace();
+                    errorPanel.setVisible(true);
+                }
             }
         });
 
@@ -284,7 +279,6 @@ public class UserInputPanel extends JPanel{
                     nfe.printStackTrace();
                     errorPanel.setVisible(true);
                 }
-
             }
         });
 
@@ -308,7 +302,6 @@ public class UserInputPanel extends JPanel{
                     nfe.printStackTrace();
                     errorPanel.setVisible(true);
                 }
-
             }
         });
 
@@ -332,7 +325,6 @@ public class UserInputPanel extends JPanel{
                     nfe.printStackTrace();
                     errorPanel.setVisible(true);
                 }
-
             }
         });
 
@@ -356,7 +348,6 @@ public class UserInputPanel extends JPanel{
                     nfe.printStackTrace();
                     errorPanel.setVisible(true);
                 }
-
             }
         });
 
@@ -447,7 +438,6 @@ public class UserInputPanel extends JPanel{
 //                calc.doorAbsorption(room1, door1);
 //                calc.windowAbsorption(room1, window1);
                 calc.totalAbsorption(room1);
-
             }
         });
 
@@ -474,7 +464,6 @@ public class UserInputPanel extends JPanel{
                 for (int x : lengthModes) {
                     System.out.println(x + ", ");
                 }
-
             }
         });
     }
@@ -491,5 +480,4 @@ public class UserInputPanel extends JPanel{
         super.paintComponent(g);
         g.setColor(Color.WHITE);
     }
-
 }
